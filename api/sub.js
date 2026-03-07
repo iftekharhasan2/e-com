@@ -3,7 +3,7 @@ import { MongoClient } from 'mongodb';
 
 // 🔗 Your MongoDB Atlas connection string
 // ⚠️ For production: Move this to Vercel Environment Variables
-const MONGODB_URI = 'mongodb+srv://adnaninsky:980Orwo7M5xB8fnh@cluster0.bd9ywas.mongodb.net/AYHAA?retryWrites=true&w=majority';
+const MONGODB_URI = 'mongodb+srv://adnaninsky:980Orwo7M5xB8fnh@cluster0.bd9ywas.mongodb.net';
 
 export default async function handler(req, res) {
   // CORS headers for frontend access
@@ -41,7 +41,7 @@ export default async function handler(req, res) {
 
     // Connect to MongoDB Atlas
     await client.connect();
-    const db = client.db('urbor_essentials'); // Database name
+    const db = client.db('Ahya'); // Database name
     const collection = db.collection('orders');
 
     // Create order document
