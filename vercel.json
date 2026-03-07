@@ -6,6 +6,10 @@
       "use": "@vercel/static"
     },
     {
+      "src": "image/**/*",
+      "use": "@vercel/static"
+    },
+    {
       "src": "api/sub.js",
       "use": "@vercel/node"
     }
@@ -25,6 +29,10 @@
       "src": "/api/(.*)",
       "status": 404,
       "headers": { "X-Content-Type-Options": "nosniff" }
+    },
+    {
+      "src": "/image/(.*)",
+      "dest": "/image/$1"
     },
     {
       "src": "/(.+\\.html)",
