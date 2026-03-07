@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Urbor • Checkout</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #f6faf9; 
+      color: #1a2e2b;
+    }
+    .card {
+      background: white;
+      border-radius: 24px;
+      border: 1px solid #e2f0e8;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+    }
+    .product-item {
+      background: white;
+      border-radius: 20px;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border: 1px solid #e2f0e8;
+      cursor: pointer;
+    }
+    .product-item.selected {
+      border-color: #0f8f6e;
+      background: #ebfaf3;
+    }
+    .product-item.selected .check-indicator {
+      background: #0f8f6e;
+      border-color: #0f8f6e;
+      color: white;
+    }
+    .check-indicator {
+      width: 24px; height: 24px;
+      border-radius: 24px;
+      border: 2px solid #cbdcd0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      flex-shrink: 0;
+    }
+    .input-field {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      background: white;
+      border: 1px solid #d0e2da;
+      border-radius: 20px;
+    }
+    .input-field:focus {
+      outline: none;
+      border-color: #0f8f6e;
+      box-shadow: 0 0 0 3px rgba(15,143,110,0.1);
+    }
+    .input-field.error {
+      border-color: #dc4a4a;
+    }
+    .premium-btn {
+      background: #0f8f6e;
+      color: white;
+      font-weight: 600;
+      padding: 1rem;
+      border-radius: 40px;
+      width: 100%;
+      box-shadow: 0 8px 16px rgba(15,143,110,0.2);
+      cursor: pointer;
+      border: none;
+    }
+    .premium-btn:hover { background: #0c7559; }
+    .premium-btn:disabled { opacity: 0.5; }
+    .message {
+      padding: 1rem;
+      border-radius: 40px;
+    }
+    .message.success { background: #e0f5e8; color: #0b5e45; }
+    .message.error { background: #fee9e7; color: #aa2e2e; }
+    .summary-line { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px dashed #cfe3db; }
+    .summary-total { font-size: 1.8rem; font-weight: 700; color: #0f8f6e; }
+  </style>
+</head>
+<body class="antialiased">
+
+<div class="max-w-6xl mx-auto px-4 py-6">
+  
+  <div class="text-center mb-8">
+    <h1 class="text-4xl font-light">complete <span class="font-semibold text-green-700">order</span></h1>
+  </div>
+
+  <div class="grid md:grid-cols-12 gap-6">
+    
+    <div class="md:col-span-5 space-y-5">
+      <div class="card p-5">
+        <div class="flex items-center gap-2 mb-4">
+          <i class="fas fa-tag text-green-600"></i>
+          <span class="font-semibold">select product</span>
+        </div>
+        <div class="space-y-2" id="product-list"></div>
+        
+        <div id="selected-summary" class="mt-5 pt-3 border-t border-green-100 hidden">
+          <div class="flex items-center justify-between text-sm">
+            <span class="text-gray-500">selected:</span>
+            <span id="selected-name" class="font-semibold"></span>
+            <span id="selected-price" class="font-bold text-green-700"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="md:col-span-7">
+      <form id="checkout-form" class="card p-6 space-y-5">
+        
+        <div class="flex items-center gap-2"><i class="fas fa-map-pin text-green-600"></i><span class="font-medium">delivery</span></div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <input type="text" id="name" placeholder="Full name *" class="input-field">
+          <input type="tel" id="phone" placeholder="Phone *" class="input-field">
+          <input type="email" id="email" placeholder="Email *" class="input-field sm:col-span-2">
+          <textarea id="address" placeholder="Delivery address *" rows="2" class="input-field sm:col-span-2"></textarea>
+        </div>
+        
+        <div>
+          <div class="flex items-center gap-2 mb-3"><i class="fas fa-mobile-alt text-green-600"></i><span class="font-medium">bKash (on delivery)</span></div>
+          <div class="bg-green-50 p-4 rounded-2xl border border-green-100 text-sm mb-3">
+            send to <span class="font-mono">017XXXXXXXX</span>
+          </div>
+          <input type="text" id="transactionId" placeholder="bKash transaction ID *" class="input-field">
+        </div>
+        
+        <div class="bg-white p-5 rounded-2xl border border-green-100">
+          <div class="summary-line"><span>product</span> <span id="summary-product" class="font-medium">—</span></div>
+          <div class="summary-line"><span>delivery</span> <span class="text-green-700">free</span></div>
+          <div class="flex justify-between pt-3">
+            <span class="font-semibold">total</span>
+            <span id="summary-total" class="summary-total">৳ 0</span>
+          </div>
+          <input type="hidden" id="form-total">
+          <input type="hidden" id="form-items">
+        </div>
+        
+        <button type="submit" id="submit-btn" class="premium-btn">
+          <span id="btn-text">place order</span>
+          <span id="btn-loading" class="hidden"><i class="fas fa-spinner fa-spin"></i> processing</span>
+        </button>
+        
+        <div id="form-message" class="hidden"></div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const products = [
+      { id: 1, name: "Whole Chicken (3kg)", price: 1260, icon: 'fa-drumstick-bite' },
+      { id: 2, name: "Whole Chicken (5kg)", price: 2100, icon: 'fa-utensils' },
+      { id: 3, name: "Whole Chicken (8kg)", price: 3300, icon: 'fa-users' }
+    ];
+
+    const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbwuTodU2_Rlr4dGOyF4hgVKPs7A4hzd8uurKymE3ZsTiuxpleu03WBB4ijEdFisfEC4/exec';
+
+    const productList = document.getElementById('product-list');
+    const selectedSummary = document.getElementById('selected-summary');
+    const selectedNameSpan = document.getElementById('selected-name');
+    const selectedPriceSpan = document.getElementById('selected-price');
+    const summaryProduct = document.getElementById('summary-product');
+    const summaryTotal = document.getElementById('summary-total');
+    const formTotal = document.getElementById('form-total');
+    const formItems = document.getElementById('form-items');
+    
+    const nameField = document.getElementById('name');
+    const phoneField = document.getElementById('phone');
+    const emailField = document.getElementById('email');
+    const addressField = document.getElementById('address');
+    const transactionField = document.getElementById('transactionId');
+    const form = document.getElementById('checkout-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const btnText = document.getElementById('btn-text');
+    const btnLoading = document.getElementById('btn-loading');
+    const messageBox = document.getElementById('form-message');
+    
+    let selectedProduct = null;
+
+    products.forEach(p => {
+      const div = document.createElement('div');
+      div.className = 'product-item';
+      div.dataset.id = p.id;
+      div.innerHTML = `
+        <div class="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center text-green-700"><i class="fas ${p.icon}"></i></div>
+        <div class="flex-1">
+          <div class="font-medium">${p.name}</div>
+          <div class="text-green-700 font-bold">৳ ${p.price.toLocaleString()}</div>
+        </div>
+        <div class="check-indicator"></div>
+      `;
+      div.addEventListener('click', () => selectProduct(p, div));
+      productList.appendChild(div);
+    });
+
+    function selectProduct(product, cardEl) {
+      document.querySelectorAll('.product-item').forEach(c => {
+        c.classList.remove('selected');
+        const ind = c.querySelector('.check-indicator');
+        if (ind) ind.innerHTML = '';
+      });
+      cardEl.classList.add('selected');
+      const indicator = cardEl.querySelector('.check-indicator');
+      if (indicator) indicator.innerHTML = '<i class="fas fa-check text-xs"></i>';
+      
+      selectedProduct = product;
+      
+      selectedNameSpan.innerText = product.name;
+      selectedPriceSpan.innerText = `৳ ${product.price}`;
+      summaryProduct.innerText = product.name;
+      summaryTotal.innerText = `৳ ${product.price.toLocaleString()}`;
+      formTotal.value = product.price;
+      formItems.value = product.name;
+      selectedSummary.classList.remove('hidden');
+    }
+
+    setTimeout(() => {
+      if (!selectedProduct && products.length > 0) {
+        const firstCard = document.querySelector('.product-item');
+        if (firstCard) selectProduct(products[0], firstCard);
+      }
+    }, 300);
+
+    [nameField, phoneField, emailField, addressField, transactionField].forEach(f => {
+      f.addEventListener('input', () => f.classList.remove('error'));
+    });
+
+    function markFieldError(field) {
+      field.classList.add('error');
+      field.focus({ preventScroll: true });
+    }
+
+    function setMessage(text, type) {
+      messageBox.className = `message ${type} mt-2`;
+      messageBox.innerHTML = `<i class="fas ${type==='success'?'fa-check-circle':'fa-exclamation-circle'}"></i> ${text}`;
+      messageBox.classList.remove('hidden');
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      document.querySelectorAll('.input-field').forEach(f => f.classList.remove('error'));
+      
+      if (!selectedProduct) {
+        setMessage('Please select a product.', 'error');
+        return;
+      }
+      
+      const name = nameField.value.trim();
+      const phone = phoneField.value.trim();
+      const email = emailField.value.trim();
+      const address = addressField.value.trim();
+      const txn = transactionField.value.trim().toUpperCase();
+      
+      let hasError = false;
+      if (!name) { markFieldError(nameField); hasError = true; }
+      if (!phone) { markFieldError(phoneField); hasError = true; }
+      if (!email || !email.includes('@')) { markFieldError(emailField); hasError = true; }
+      if (!address) { markFieldError(addressField); hasError = true; }
+      if (!txn || txn.length < 8) { markFieldError(transactionField); hasError = true; }
+      
+      if (hasError) {
+        setMessage('Please complete all fields correctly.', 'error');
+        return;
+      }
+
+      const orderData = {
+        transactionId: txn,
+        name, email, phone, address,
+        total: selectedProduct.price,
+        items: selectedProduct.name
+      };
+
+      submitBtn.disabled = true;
+      btnText.classList.add('hidden');
+      btnLoading.classList.remove('hidden');
+      messageBox.classList.add('hidden');
+
+      try {
+        const response = await fetch(GOOGLE_SHEET_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(orderData)
+        });
+        
+        const result = await response.json();
+        if (response.ok && result.result === 'success') {
+          setMessage(`✓ Order confirmed!`, 'success');
+          
+          form.reset();
+          document.querySelectorAll('.product-item').forEach(c => c.classList.remove('selected'));
+          document.querySelectorAll('.check-indicator').forEach(i => i.innerHTML = '');
+          selectedSummary.classList.add('hidden');
+          summaryProduct.innerText = '—';
+          summaryTotal.innerText = '৳ 0';
+          selectedProduct = null;
+        } else {
+          setMessage(`❌ ${result.message || 'Order failed.'}`, 'error');
+        }
+      } catch (err) {
+        try {
+          await fetch(GOOGLE_SHEET_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(orderData) });
+          setMessage('✓ Order recorded.', 'success');
+          form.reset();
+          document.querySelectorAll('.product-item').forEach(c => c.classList.remove('selected'));
+          selectedSummary.classList.add('hidden');
+          summaryProduct.innerText = '—'; summaryTotal.innerText = '৳ 0';
+          selectedProduct = null;
+        } catch (f) {
+          setMessage('❌ Network error.', 'error');
+        }
+      } finally {
+        submitBtn.disabled = false;
+        btnLoading.classList.add('hidden');
+        btnText.classList.remove('hidden');
+      }
+    });
+  })();
+</script>
+</body>
+</html>
