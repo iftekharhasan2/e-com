@@ -3,7 +3,7 @@ import { MongoClient } from 'mongodb';
 
 // 🔗 Your MongoDB Atlas connection string
 // ⚠️ For production: Move this to Vercel Environment Variables
-const MONGODB_URI = 'mongodb+srv://adnaninsky:980Orwo7M5xB8fnh@cluster0.bd9ywas.mongodb.net/AYHA?retryWrites=true&w=majority';
+const MONGODB_URI = 'mongodb+srv://adnaninsky:980Orwo7M5xB8fnh@cluster0.bd9ywas.mongodb.net/AYHAA?retryWrites=true&w=majority';
 
 export default async function handler(req, res) {
   // CORS headers for frontend access
