@@ -55,28 +55,56 @@ body { background-color: #faf7f2; color: #1e1b1b; scroll-behavior: smooth; }
 <body class="antialiased relative">
 
 <!-- NAVIGATION -->
-<nav class="fixed w-full z-50 glass-card border-b border-white/30">
+<nav class="fixed w-full z-50 glass-card backdrop-blur-md border-b border-white/30 shadow-lg">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center">
-        <!-- Logo -->
-        <div class="flex items-center gap-3">
+    <div class="flex justify-between items-center py-3">
+      
+      <!-- Logo -->
+      <div class="flex items-center gap-3">
         <span class="text-3xl font-display font-semibold text-gray-900">
-        <span class="text-urbor-green"> AYHA </span>
-        <span class="text-urbor-green"> آيَة </span>
+          <span class="text-urbor-green hover:text-brand-green transition duration-300">AYHA</span>
+          <span class="text-urbor-green hover:text-brand-green transition duration-300"> آيَة </span>
         </span>
-        </div>
-      <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
-        <a href="#products" class="text-gray-800 hover:text-brand-green">Shop</a>
-        <a href="#testimonials" class="text-gray-800 hover:text-brand-green">Testimonials</a>
-        <a href="#faq" class="text-gray-800 hover:text-brand-green">FAQ</a>
       </div>
+
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
+        <a href="#products" class="text-gray-800 hover:text-brand-green transition duration-300">Shop</a>
+        <a href="#testimonials" class="text-gray-800 hover:text-brand-green transition duration-300">Testimonials</a>
+        <a href="#faq" class="text-gray-800 hover:text-brand-green transition duration-300">FAQ</a>
+      </div>
+
+      <!-- Cart & Mobile Menu -->
       <div class="flex items-center space-x-4">
-        <button onclick="toggleCart()" class="relative flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 px-4 py-2 rounded-lg transition shadow-sm">
-          <i class="fas fa-shopping-cart text-lg text-brand-green"></i>
-          <span class="hidden sm:inline text-sm font-bold">Cart</span>
-          <span id="cart-count" class="flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-brand-green rounded-full">0</span>
+        <!-- Cart Button -->
+        <div class="relative group">
+          <button onclick="toggleCart()" 
+                  class="flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 px-4 py-2 rounded-lg transition shadow-md hover:shadow-lg">
+            <i class="fas fa-shopping-cart text-lg text-brand-green"></i>
+            <span class="hidden sm:inline text-sm font-bold">Cart</span>
+            <span id="cart-count" 
+                  class="flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-brand-green rounded-full absolute -top-2 -right-2">
+              0
+            </span>
+          </button>
+          <!-- Cart Hover Dropdown -->
+          <div class="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-4">
+            <h3 class="font-semibold text-gray-700 mb-2">Your Cart</h3>
+            <div id="cart-items" class="flex flex-col gap-2 max-h-48 overflow-y-auto">
+              <p class="text-gray-500 text-sm">No items in cart</p>
+            </div>
+            <div class="mt-3 flex justify-between items-center border-t border-gray-200 pt-2">
+              <span class="font-bold text-gray-700">Subtotal:</span>
+              <span id="cart-subtotal" class="font-semibold text-gray-900">$0.00</span>
+            </div>
+            <button class="mt-3 w-full bg-brand-green hover:bg-green-600 text-white py-2 rounded-lg font-semibold transition">Checkout</button>
+          </div>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" class="md:hidden text-2xl text-gray-800 hover:text-brand-green transition duration-300">
+          <i class="fas fa-bars"></i>
         </button>
-        <button id="mobile-menu-btn" class="md:hidden text-xl text-gray-800"><i class="fas fa-bars"></i></button>
       </div>
     </div>
   </div>
