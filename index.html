@@ -51,6 +51,10 @@ body { background-color: #faf7f2; color: #1e1b1b; scroll-behavior: smooth; }
 .modal-content.show { transform: translateY(0); opacity:1; }
 .cart-scroll::-webkit-scrollbar { width: 4px; }
 .cart-scroll::-webkit-scrollbar-thumb { background: #2d6a4f; border-radius: 4px; }
+
+/* Spinner Animation */
+@keyframes spin { to { transform: rotate(360deg); } }
+.loader { border-width: 4px; border-style: solid; border-radius: 9999px; border-top-color: transparent; animation: spin 1s linear infinite; }
 </style>
 </head>
 <body class="antialiased relative">
@@ -59,8 +63,6 @@ body { background-color: #faf7f2; color: #1e1b1b; scroll-behavior: smooth; }
 <nav class="fixed w-full z-50 glass-card backdrop-blur-md border-b border-white/30 shadow-lg">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center py-3">
-      
-      <!-- Logo -->
       <div class="flex items-center gap-3">
         <span class="text-3xl font-display font-semibold text-gray-900">
           <span class="text-urbor-green hover:text-brand-green transition duration-300">AYHA</span>
@@ -68,27 +70,21 @@ body { background-color: #faf7f2; color: #1e1b1b; scroll-behavior: smooth; }
         </span>
       </div>
 
-      <!-- Desktop Menu -->
-      <div class="hidden md:flex items-center space-x-8 text-sm font-medium  ">
+      <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
         <a href="#products" class="text-gray-800 hover:text-brand-green transition duration-300 hoverEffect">Shop</a>
         <a href="#testimonials" class="text-gray-800 hover:text-brand-green transition duration-300 hoverEffect">Testimonials</a>
         <a href="#faq" class="text-gray-800 hover:text-brand-green transition duration-300 hoverEffect">FAQ</a>
       </div>
 
-      <!-- Cart & Mobile Menu -->
       <div class="flex items-center space-x-4">
-        <!-- Cart Button -->
         <div class="relative group">
           <button onclick="toggleCart()" 
                   class="flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 px-4 py-2 rounded-lg transition shadow-md hover:shadow-lg">
             <i class="fas fa-shopping-cart text-lg text-brand-green"></i>
             <span class="hidden sm:inline text-sm font-bold">Cart</span>
             <span id="cart-count" 
-                  class="flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-brand-green rounded-full absolute -top-2 -right-2">
-              0
-            </span>
+                  class="flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-brand-green rounded-full absolute -top-2 -right-2">0</span>
           </button>
-          <!-- Cart Hover Dropdown -->
           <div class="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-4">
             <h3 class="font-semibold text-gray-700 mb-2">Your Cart</h3>
             <div id="cart-items" class="flex flex-col gap-2 max-h-48 overflow-y-auto">
@@ -96,16 +92,11 @@ body { background-color: #faf7f2; color: #1e1b1b; scroll-behavior: smooth; }
             </div>
             <div class="mt-3 flex justify-between items-center border-t border-gray-200 pt-2">
               <span class="font-bold text-gray-700">Subtotal:</span>
-              <span id="cart-subtotal" class="font-semibold text-gray-900">$0.00</span>
+              <span id="cart-subtotal" class="font-semibold text-gray-900">৳0</span>
             </div>
             <button onclick="openCheckout()" class="mt-3 w-full bg-brand-green hover:bg-green-600 text-white py-2 rounded-lg font-semibold transition">Checkout</button>
           </div>
         </div>
-
-        <!-- Mobile Menu Button -->
-        <!-- <button id="mobile-menu-btn" class="md:hidden text-2xl text-gray-800 hover:text-brand-green transition duration-300">
-          <i class="fas fa-bars"></i>
-        </button> -->
       </div>
     </div>
   </div>
@@ -113,23 +104,14 @@ body { background-color: #faf7f2; color: #1e1b1b; scroll-behavior: smooth; }
 
 <!-- HERO SECTION -->
 <section class="relative hero-section h-screen flex items-center justify-center">
-  <img 
-    src="https://images.unsplash.com/photo-1593032465175-481ac7f401a0?auto=format&fit=crop&w=600&q=80"
-    alt="Trendy Clothing Collection"
-    class="w-full h-full object-cover"
-  >
+  <img src="https://images.unsplash.com/photo-1593032465175-481ac7f401a0?auto=format&fit=crop&w=600&q=80" alt="Trendy Clothing Collection" class="w-full h-full object-cover">
   <div class="absolute inset-0 bg-black/30 flex items-end ">
     <div class="max-w-7xl mx-auto px-4 pb-16 w-full">
       <div class="max-w-3xl text-center mx-auto my-auto">
-        <h1 class="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4">
-          Trendy & Sustainable Fashion
-        </h1>
-        <p class="text-white/90 text-lg md:text-xl mb-6">
-          Stylish clothing • Comfortable fit • Ethically made
-        </p>
+        <h1 class="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4">Trendy & Sustainable Fashion</h1>
+        <p class="text-white/90 text-lg md:text-xl mb-6">Stylish clothing • Comfortable fit • Ethically made</p>
         <a href="#products" class="inline-flex items-center gap-2 bg-brand-green hover:bg-brand-green-dark text-white px-8 py-4 rounded-lg text-base font-medium transition">
-          Shop Now
-          <i class="fas fa-arrow-down"></i>
+          Shop Now <i class="fas fa-arrow-down"></i>
         </a>
       </div>
     </div>
@@ -206,6 +188,11 @@ body { background-color: #faf7f2; color: #1e1b1b; scroll-behavior: smooth; }
     </div>
     <button onclick="openCheckout()" class="btn-brand w-full py-3 rounded-lg">Checkout</button>
   </div>
+
+  <!-- Cart Processing Overlay -->
+  <div id="cartProcessingOverlay" class="absolute inset-0 bg-white/70 flex items-center justify-center hidden z-50">
+    <div class="loader border-4 border-brand-green border-t-transparent rounded-full w-12 h-12 animate-spin"></div>
+  </div>
 </div>
 
 <!-- CHECKOUT MODAL -->
@@ -274,75 +261,102 @@ let quantities = {};
 function renderProducts(){
   const container = document.getElementById('product-container');
   container.innerHTML = products.map(p=>{
-    const qty = quantities[p.id]||0;
+    const qty = quantities[p.id] || 0;
     return `
-    <article class="glass-card overflow-hidden flex flex-col">
-      <img src="${p.image}" alt="${p.name}" class="h-60 w-full object-cover">
-      <div class="p-4 flex-1 flex flex-col justify-between">
-        <h3 class="font-semibold text-gray-900 mb-1">${p.name}</h3>
+      <div class="glass-card p-4 flex flex-col">
+        <img src="${p.image}" alt="${p.name}" class="h-64 w-full object-cover rounded-lg mb-4">
+        <h3 class="font-bold text-lg text-gray-800">${p.name}</h3>
         <p class="text-gray-600 text-sm mb-2">${p.desc}</p>
-        <div class="mt-auto flex items-center justify-between">
-          <span class="font-bold text-brand-green">৳${p.price}</span>
-          <div class="qty-control">
-            <button class="qty-btn" onclick="changeQty(${p.id},-1)" ${qty===0?'disabled':''}>-</button>
+        <div class="mt-auto flex justify-between items-center">
+          <div class="flex items-center gap-2">
+            <button class="qty-btn" onclick="updateQty(${p.id}, -1)">-</button>
             <span class="qty-value">${qty}</span>
-            <button class="qty-btn" onclick="changeQty(${p.id},1)">+</button>
+            <button class="qty-btn" onclick="updateQty(${p.id}, 1)">+</button>
           </div>
+          <span class="font-semibold text-gray-900">৳${p.price}</span>
         </div>
-      </div>
-    </article>`;
+      </div>`;
   }).join('');
 }
 
-function changeQty(id,delta){
-  quantities[id] = Math.max((quantities[id]||0)+delta,0);
-  renderProducts(); updateCart();
+function updateQty(id, change){
+  quantities[id] = Math.max(0,(quantities[id]||0)+change);
+  renderProducts();
+  updateCart();
 }
 
 function updateCart(){
-  const cartItems = document.getElementById('cart-items');
-  const items = products.filter(p=>quantities[p.id]>0);
-  if(items.length===0){
-    cartItems.innerHTML='<p class="text-gray-500 text-sm">No items in cart</p>';
-    document.getElementById('cart-count').textContent=0;
-    document.getElementById('cart-subtotal').textContent='৳0';
-    document.getElementById('checkout-total').textContent='৳0';
-    return;
+  const itemsDiv = document.getElementById('cart-items');
+  itemsDiv.innerHTML = '';
+  const added = products.filter(p=>quantities[p.id]>0);
+  let subtotal = 0;
+  if(added.length===0){
+    itemsDiv.innerHTML = '<p class="text-gray-500 text-sm">No items in cart</p>';
+  } else {
+    added.forEach(p=>{
+      const qty = quantities[p.id];
+      const total = qty*p.price;
+      subtotal+=total;
+      itemsDiv.innerHTML += `<div class="flex justify-between items-center">
+        <span>${p.name} x${qty}</span>
+        <span>৳${total}</span>
+      </div>`;
+    });
   }
-  cartItems.innerHTML=items.map(p=>`
-    <div class="flex justify-between items-center">
-      <span class="text-gray-700">${p.name} x ${quantities[p.id]}</span>
-      <span class="font-semibold text-gray-900">৳${p.price*quantities[p.id]}</span>
-    </div>
-  `).join('');
-  const subtotal = items.reduce((acc,p)=>acc+p.price*quantities[p.id],0);
-  document.getElementById('cart-count').textContent=items.length;
-  document.getElementById('cart-subtotal').textContent=`৳${subtotal}`;
-  document.getElementById('checkout-total').textContent=`৳${subtotal}`;
+  document.getElementById('cart-subtotal').textContent = `৳${subtotal}`;
+  document.getElementById('cart-count').textContent = added.length;
+  document.getElementById('checkout-total').textContent = `৳${subtotal}`;
 }
 
-<!-- function toggleCart(){document.getElementById('cartSidebar').classList.toggle('open');} -->
-function openCheckout(){document.getElementById('checkoutModal').classList.remove('hidden'); setTimeout(()=>document.querySelector('.modal-content').classList.add('show'),50);}
-function closeCheckout(){document.querySelector('.modal-content').classList.remove('show'); setTimeout(()=>document.getElementById('checkoutModal').classList.add('hidden'),300);}
-
-document.getElementById('checkoutForm').addEventListener('submit',async e=>{
-  e.preventDefault();
-  const form = e.target;
-  const items = products.filter(p=>quantities[p.id]>0).map(p=>({id:p.id,name:p.name,price:p.price,quantity:quantities[p.id]}));
-  if(items.length===0){alert('Cart is empty!'); return;}
-  const total = items.reduce((acc,i)=>acc+i.price*i.quantity,0);
-  const data = {name:form.name.value,phone:form.phone.value,email:form.email.value,address:form.address.value,transactionId:form.transactionId.value,total,items};
-  try{
-    const res = await fetch('/api/sub',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
-    const json = await res.json();
-    if(json.success){alert('Order placed! Transaction ID: '+json.transactionId); quantities={}; renderProducts(); updateCart(); closeCheckout();}
-    else{alert('Error: '+json.error);}
-  }catch(err){console.error(err); alert('Submission failed.');}
-});
+function toggleCart(){ document.getElementById('cartSidebar').classList.toggle('open'); }
+function openCheckout(){ document.getElementById('checkoutModal').classList.remove('hidden'); document.querySelector('.modal-content').classList.add('show'); }
+function closeCheckout(){ document.getElementById('checkoutModal').classList.add('hidden'); document.querySelector('.modal-content').classList.remove('show'); }
 
 renderProducts();
 updateCart();
-</script>
 
+// Checkout form
+const overlay = document.getElementById('cartProcessingOverlay');
+document.getElementById('checkoutForm').addEventListener('submit', async e=>{
+  e.preventDefault();
+  const form = e.target;
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const items = products.filter(p=>quantities[p.id]>0).map(p=>({id:p.id,name:p.name,price:p.price,quantity:quantities[p.id]}));
+  if(items.length===0){ alert('Cart is empty!'); return; }
+  const total = items.reduce((acc,i)=>acc+i.price*i.quantity,0);
+  const data = {
+    name: form.name.value,
+    phone: form.phone.value,
+    email: form.email.value,
+    address: form.address.value,
+    transactionId: form.transactionId.value,
+    total,
+    items
+  };
+  overlay.classList.remove('hidden');
+  submitBtn.textContent = "Processing...";
+  submitBtn.disabled = true;
+  try {
+    const res = await fetch('/api/sub', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data)});
+    const json = await res.json();
+    if(json.success){
+      submitBtn.textContent = "Order Placed!";
+      setTimeout(()=>{
+        alert('Order successfully placed! Transaction ID: ' + json.transactionId);
+        quantities={};
+        renderProducts(); updateCart(); closeCheckout();
+        submitBtn.textContent = "Place Order"; submitBtn.disabled=false; overlay.classList.add('hidden');
+      },500);
+    } else {
+      alert('Error: '+json.error);
+      submitBtn.textContent = "Place Order"; submitBtn.disabled=false; overlay.classList.add('hidden');
+    }
+  } catch(err){
+    console.error(err);
+    alert('Submission failed.');
+    submitBtn.textContent = "Place Order"; submitBtn.disabled=false; overlay.classList.add('hidden');
+  }
+});
+</script>
 </body>
 </html>
