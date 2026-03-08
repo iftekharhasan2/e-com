@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AYHA | Premium Antibiotic-Free Chicken</title>
-<meta name="description" content="Premium antibiotic-free chicken, ethically raised and delivered fresh across Dhaka. Order online with bKash.">
+<title>URBOR | Trendy Clothing Collection</title>
+<meta name="description" content="URBOR Clothing – Stylish, comfortable, and sustainable fashion for men and women. Shop online with secure checkout.">
 
 <!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -18,10 +18,10 @@ tailwind.config = {
   theme: {
     extend: {
       colors: {
-        'urbor-green': '#2d6a4f',
-        'urbor-green-dark': '#1b4332',
-        'urbor-green-light': '#40916c',
-        'urbor-cream': '#faf7f2',
+        'brand-green': '#2d6a4f',
+        'brand-green-dark': '#1b4332',
+        'brand-green-light': '#40916c',
+        'brand-cream': '#faf7f2',
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
@@ -34,55 +34,41 @@ tailwind.config = {
 
 <style>
 body { background-color: #faf7f2; color: #1e1b1b; scroll-behavior: smooth; }
-
-/* Glassmorphism Cards */
-.glass-card-premium { background: rgba(250,255,255,0.9); border: 1px solid rgba(45,106,79,0.15); transition: all 0.3s ease; border-radius:1rem;}
-.glass-card-premium:hover { transform: translateY(-4px); box-shadow:0 20px 40px -10px rgba(45,106,79,0.15); border-color: rgba(45,106,79,0.3);}
-
-/* Buttons */
-.btn-premium { background: linear-gradient(145deg,#2d6a4f,#1b4332); color:white; font-weight:500; transition: all 0.3s ease; border:none; }
-.btn-premium:hover { transform: translateY(-2px); box-shadow:0 12px 28px -8px #2d6a4f99; }
-
-/* Quantity Controls */
+.glass-card { background: rgba(250,255,255,0.9); border: 1px solid rgba(45,106,79,0.15); border-radius:1rem; transition: all 0.3s ease;}
+.glass-card:hover { transform: translateY(-4px); box-shadow:0 20px 40px -10px rgba(45,106,79,0.15); border-color: rgba(45,106,79,0.3);}
+.btn-brand { background: linear-gradient(145deg,#2d6a4f,#1b4332); color:white; font-weight:500; transition: all 0.3s ease; border:none; }
+.btn-brand:hover { transform: translateY(-2px); box-shadow:0 12px 28px -8px #2d6a4f99; }
 .qty-control { display:flex; align-items:center; gap:0; background:#f0eae4; border-radius:10px; overflow:hidden; border:1px solid rgba(45,106,79,0.15);}
 .qty-btn { width:36px; height:36px; display:flex; align-items:center; justify-content:center; background:transparent; border:none; color:#2d6a4f; font-size:14px; cursor:pointer; }
 .qty-btn:hover { background: rgba(45,106,79,0.1);}
 .qty-btn:disabled { opacity:0.4; cursor:not-allowed;}
 .qty-value { min-width:36px; text-align:center; font-weight:600; font-size:14px; }
-
-/* Cart Sidebar */
 #cartSidebar { transition: all 0.3s ease-in-out; transform: translateX(100%); }
 #cartSidebar.open { transform: translateX(0); }
-
-/* Modal */
 .modal-bg { background: rgba(0,0,0,0.5); }
 .modal-content { transition: all 0.3s ease-in-out; transform: translateY(-20px); opacity:0; }
 .modal-content.show { transform: translateY(0); opacity:1; }
-
-/* Scrollbars */
 .cart-scroll::-webkit-scrollbar { width: 4px; }
 .cart-scroll::-webkit-scrollbar-thumb { background: #2d6a4f; border-radius: 4px; }
-
 </style>
 </head>
 <body class="antialiased relative">
 
 <!-- NAVIGATION -->
-<nav class="fixed w-full z-50 glass-card-premium border-b border-white/30">
+<nav class="fixed w-full z-50 glass-card border-b border-white/30">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between h-16 items-center">
-      <div class="flex items-center gap-3 text-xl font-display font-bold text-urbor-green">AYHA <span class="text-urbor-green-dark">آيَة</span></div>
+      <div class="flex items-center gap-3 text-xl font-display font-bold text-brand-green">URBOR <span class="text-brand-green-dark">Clothing</span></div>
       <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
-        <a href="#products" class="text-gray-800 hover:text-urbor-green">Our Products</a>
-        <a href="#why-us" class="text-gray-800 hover:text-urbor-green">Why Us</a>
-        <a href="#testimonials" class="text-gray-800 hover:text-urbor-green">Testimonials</a>
-        <a href="#faq" class="text-gray-800 hover:text-urbor-green">FAQ</a>
+        <a href="#products" class="text-gray-800 hover:text-brand-green">Shop</a>
+        <a href="#testimonials" class="text-gray-800 hover:text-brand-green">Testimonials</a>
+        <a href="#faq" class="text-gray-800 hover:text-brand-green">FAQ</a>
       </div>
       <div class="flex items-center space-x-4">
         <button onclick="toggleCart()" class="relative flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 px-4 py-2 rounded-lg transition shadow-sm">
-          <i class="fas fa-shopping-cart text-lg text-urbor-green"></i>
+          <i class="fas fa-shopping-cart text-lg text-brand-green"></i>
           <span class="hidden sm:inline text-sm font-bold">Cart</span>
-          <span id="cart-count" class="flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-urbor-green rounded-full">0</span>
+          <span id="cart-count" class="flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-brand-green rounded-full">0</span>
         </button>
         <button id="mobile-menu-btn" class="md:hidden text-xl text-gray-800"><i class="fas fa-bars"></i></button>
       </div>
@@ -92,33 +78,77 @@ body { background-color: #faf7f2; color: #1e1b1b; scroll-behavior: smooth; }
 
 <!-- HERO -->
 <section class="hero-section pt-16 relative">
-  <img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=1200&q=80" class="w-full h-full object-cover" alt="Premium Antibiotic-Free Chicken">
+  <img src="https://images.unsplash.com/photo-1616595327722-7b7d7ecb3f68?auto=format&fit=crop&w=1200&q=80" class="w-full h-full object-cover" alt="Fashion Clothing Hero">
   <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
     <div class="text-center px-4 max-w-3xl">
-      <h1 class="text-4xl md:text-6xl font-display font-bold text-white mb-4">Premium Antibiotic-Free Chicken</h1>
-      <p class="text-lg md:text-xl text-white/90 mb-6">Ethically raised • Fresh delivery • Order via bKash</p>
-      <a href="#products" class="inline-flex items-center gap-2 btn-premium px-8 py-4 rounded-lg text-base font-medium">Shop Now <i class="fas fa-arrow-down"></i></a>
+      <h1 class="text-4xl md:text-6xl font-display font-bold text-white mb-4">Trendy & Sustainable Fashion</h1>
+      <p class="text-lg md:text-xl text-white/90 mb-6">Comfortable clothing, ethically made, for every occasion.</p>
+      <a href="#products" class="inline-flex items-center gap-2 btn-brand px-8 py-4 rounded-lg text-base font-medium">Shop Now <i class="fas fa-arrow-down"></i></a>
     </div>
   </div>
 </section>
 
 <!-- PRODUCTS -->
-<section id="products" class="py-20 bg-[#faf7f2]">
+<section id="products" class="py-20 bg-brand-cream">
   <div class="max-w-7xl mx-auto px-4">
     <div class="text-center max-w-2xl mx-auto mb-12">
-      <span class="text-urbor-green uppercase tracking-wider text-xs font-semibold">NEW ARRIVALS</span>
-      <h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900 mt-2 mb-3">Our Collection</h2>
-      <p class="text-gray-600">Ethically raised antibiotic-free chicken, delivered fresh across Dhaka.</p>
+      <span class="text-brand-green uppercase tracking-wider text-xs font-semibold">Collection</span>
+      <h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900 mt-2 mb-3">Featured Products</h2>
+      <p class="text-gray-600">Stylish and comfortable clothing for men and women. Shop your favorites below.</p>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" id="product-container"></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials" class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 text-center mb-12">
+    <h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900">What Our Customers Say</h2>
+    <p class="text-gray-600 mt-2">Real feedback from our happy fashion lovers.</p>
+  </div>
+  <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="glass-card p-6">
+      <p class="text-gray-700 italic">"Love the quality of the t-shirts! Very comfortable and stylish."</p>
+      <h4 class="mt-4 font-bold text-brand-green">— Ahsan, Dhaka</h4>
+    </div>
+    <div class="glass-card p-6">
+      <p class="text-gray-700 italic">"The kurta I ordered fits perfectly and looks amazing. Highly recommend!"</p>
+      <h4 class="mt-4 font-bold text-brand-green">— Farhana, Chattogram</h4>
+    </div>
+    <div class="glass-card p-6">
+      <p class="text-gray-700 italic">"Fast delivery and excellent customer service. Will buy again."</p>
+      <h4 class="mt-4 font-bold text-brand-green">— Rafiq, Sylhet</h4>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="py-20 bg-brand-cream">
+  <div class="max-w-7xl mx-auto px-4 text-center mb-12">
+    <h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900">Frequently Asked Questions</h2>
+    <p class="text-gray-600 mt-2">Common questions about our clothing line and services.</p>
+  </div>
+  <div class="max-w-3xl mx-auto space-y-4">
+    <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+      <h3 class="font-bold text-brand-green cursor-pointer">What sizes are available?</h3>
+      <p class="mt-2 text-gray-700">We offer sizes XS to XXL for all products.</p>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+      <h3 class="font-bold text-brand-green cursor-pointer">Do you offer international shipping?</h3>
+      <p class="mt-2 text-gray-700">Currently, we only ship within Bangladesh.</p>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+      <h3 class="font-bold text-brand-green cursor-pointer">Can I return or exchange?</h3>
+      <p class="mt-2 text-gray-700">Yes! We accept returns or exchanges within 7 days of delivery for unworn items.</p>
+    </div>
   </div>
 </section>
 
 <!-- CART SIDEBAR -->
 <div id="cartSidebar" class="fixed top-0 right-0 w-80 h-full bg-white shadow-2xl z-50 flex flex-col">
   <div class="flex justify-between items-center p-4 border-b">
-    <h2 class="font-bold text-lg text-urbor-green">Your Cart</h2>
-    <button onclick="toggleCart()" class="text-gray-700 hover:text-urbor-green"><i class="fas fa-times"></i></button>
+    <h2 class="font-bold text-lg text-brand-green">Your Cart</h2>
+    <button onclick="toggleCart()" class="text-gray-700 hover:text-brand-green"><i class="fas fa-times"></i></button>
   </div>
   <div class="flex-1 overflow-y-auto p-4 cart-scroll" id="cart-items"></div>
   <div class="p-4 border-t">
@@ -126,7 +156,7 @@ body { background-color: #faf7f2; color: #1e1b1b; scroll-behavior: smooth; }
       <span>Subtotal:</span>
       <span id="cart-subtotal">৳0</span>
     </div>
-    <button onclick="openCheckout()" class="btn-premium w-full py-3 rounded-lg">Checkout</button>
+    <button onclick="openCheckout()" class="btn-brand w-full py-3 rounded-lg">Checkout</button>
   </div>
 </div>
 
@@ -134,8 +164,8 @@ body { background-color: #faf7f2; color: #1e1b1b; scroll-behavior: smooth; }
 <div id="checkoutModal" class="fixed inset-0 hidden items-center justify-center modal-bg z-50">
   <div class="bg-white rounded-xl max-w-md w-full p-6 modal-content">
     <div class="flex justify-between items-center mb-4">
-      <h3 class="text-xl font-bold text-urbor-green">Checkout</h3>
-      <button onclick="closeCheckout()" class="text-gray-600 hover:text-urbor-green"><i class="fas fa-times"></i></button>
+      <h3 class="text-xl font-bold text-brand-green">Checkout</h3>
+      <button onclick="closeCheckout()" class="text-gray-600 hover:text-brand-green"><i class="fas fa-times"></i></button>
     </div>
     <form id="checkoutForm" class="space-y-3">
       <input type="text" name="name" placeholder="Full Name" class="w-full border px-3 py-2 rounded-md" required>
@@ -147,7 +177,7 @@ body { background-color: #faf7f2; color: #1e1b1b; scroll-behavior: smooth; }
         <span>Total:</span>
         <span id="checkout-total">৳0</span>
       </div>
-      <button type="submit" class="btn-premium w-full py-3 rounded-lg">Place Order</button>
+      <button type="submit" class="btn-brand w-full py-3 rounded-lg">Place Order</button>
     </form>
   </div>
 </div>
@@ -156,28 +186,28 @@ body { background-color: #faf7f2; color: #1e1b1b; scroll-behavior: smooth; }
 <footer class="bg-gray-950 text-gray-300 pt-12 pb-6">
   <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
     <div class="md:col-span-2">
-      <h3 class="text-2xl font-display font-bold text-white">AYHA <span class="text-urbor-green">آيَة</span></h3>
-      <p class="text-gray-400 mt-2 text-sm">Ethically raised antibiotic-free chicken, delivered fresh across Dhaka.</p>
+      <h3 class="text-2xl font-display font-bold text-white">URBOR <span class="text-brand-green">Clothing</span></h3>
+      <p class="text-gray-400 mt-2 text-sm">Stylish, comfortable, and sustainable clothing delivered to your door.</p>
     </div>
     <div>
       <h4 class="font-bold text-white mb-2 text-sm">Explore</h4>
       <ul class="space-y-1 text-gray-400 text-sm">
-        <li><a href="#products" class="hover:text-urbor-green">Our Products</a></li>
-        <li><a href="#why-us" class="hover:text-urbor-green">Why Us</a></li>
-        <li><a href="#faq" class="hover:text-urbor-green">FAQ</a></li>
+        <li><a href="#products" class="hover:text-brand-green">Shop</a></li>
+        <li><a href="#testimonials" class="hover:text-brand-green">Testimonials</a></li>
+        <li><a href="#faq" class="hover:text-brand-green">FAQ</a></li>
       </ul>
     </div>
     <div>
       <h4 class="font-bold text-white mb-2 text-sm">Contact</h4>
       <ul class="space-y-1 text-gray-400 text-sm">
-        <li><i class="fas fa-map-marker-alt text-urbor-green mr-2"></i>Satkania, Chattogram</li>
-        <li><i class="fas fa-phone-alt text-urbor-green mr-2"></i>+880 17 4264 6973</li>
-        <li><i class="fas fa-envelope text-urbor-green mr-2"></i>ayha@gmail.com</li>
+        <li><i class="fas fa-map-marker-alt text-brand-green mr-2"></i>Dhaka, Bangladesh</li>
+        <li><i class="fas fa-phone-alt text-brand-green mr-2"></i>+880 17 4264 6973</li>
+        <li><i class="fas fa-envelope text-brand-green mr-2"></i>support@urbor.com</li>
       </ul>
     </div>
   </div>
   <div class="border-t border-gray-700 pt-4 text-center text-gray-500 text-xs">
-    © <span id="year"></span> AYHA آيَة — Fresh, Ethical, Always.
+    © <span id="year"></span> URBOR Clothing — Style, Comfort, Sustainability.
   </div>
 </footer>
 
@@ -186,27 +216,27 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
 // Sample products
 const products = [
-  {id:1, name:"Whole Chicken (3kg)", price:1260, image:"https://e-com-nine-rho.vercel.app/image/whole-chicken-3kg.png", desc:"Farm-fresh whole chicken, perfect for roasts & curries."},
-  {id:2, name:"Whole Chicken (2kg)", price:880, image:"https://images.unsplash.com/photo-1610652492500-ded49ceeb378?auto=format&fit=crop&w=600&q=80", desc:"Fresh chicken, ready for your kitchen."},
-  {id:3, name:"Chicken Wings (1kg)", price:650, image:"https://images.unsplash.com/photo-1593032465175-481ac7f401a0?auto=format&fit=crop&w=600&q=80", desc:"Perfectly marinated wings for grilling."},
+  {id:1, name:"Men's T-Shirt", price:1200, image:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=600&q=80", desc:"Comfortable cotton t-shirt, perfect for daily wear."},
+  {id:2, name:"Women's Kurta", price:1800, image:"https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=600&q=80", desc:"Elegant and traditional kurta, made with premium fabric."},
+  {id:3, name:"Men's Chinos", price:2200, image:"https://images.unsplash.com/photo-1593032465175-481ac7f401a0?auto=format&fit=crop&w=600&q=80", desc:"Slim-fit chinos, stylish and comfortable."},
+  {id:4, name:"Women's Dress", price:2500, image:"https://images.unsplash.com/photo-1616595327722-7b7d7ecb3f68?auto=format&fit=crop&w=600&q=80", desc:"Flowy summer dress, perfect for outings."},
 ];
 
 let cart = {};
 let quantities = {};
 
-// Render products
 function renderProducts(){
   const container = document.getElementById('product-container');
   container.innerHTML = products.map(p=>{
     const qty = quantities[p.id]||0;
     return `
-    <article class="glass-card-premium overflow-hidden flex flex-col">
+    <article class="glass-card overflow-hidden flex flex-col">
       <img src="${p.image}" alt="${p.name}" class="h-60 w-full object-cover">
       <div class="p-4 flex flex-col flex-grow">
         <h3 class="font-bold text-lg mb-1">${p.name}</h3>
         <p class="text-gray-600 mb-3 flex-grow">${p.desc}</p>
         <div class="flex justify-between items-center mt-auto">
-          <span class="font-semibold text-urbor-green">৳${p.price}</span>
+          <span class="font-semibold text-brand-green">৳${p.price}</span>
           <div class="qty-control">
             <button onclick="changeQty(${p.id},-1)" class="qty-btn" ${qty===0?'disabled':''}><i class="fas fa-minus"></i></button>
             <span class="qty-value">${qty}</span>
@@ -218,7 +248,6 @@ function renderProducts(){
   }).join('');
 }
 
-// Cart functions
 function changeQty(id, delta){
   quantities[id] = Math.max(0,(quantities[id]||0)+delta);
   renderProducts();
@@ -246,7 +275,7 @@ function updateCart(){
           <h4 class="font-medium">${p.name}</h4>
           <span class="text-sm text-gray-500">${qty} × ৳${p.price}</span>
         </div>
-        <span class="font-semibold text-urbor-green">৳${itemTotal}</span>
+        <span class="font-semibold text-brand-green">৳${itemTotal}</span>
       </div>`;
     }
   }
@@ -254,11 +283,9 @@ function updateCart(){
   document.getElementById('checkout-total').textContent = `৳${subtotal}`;
 }
 
-// Checkout Modal
 function openCheckout(){ document.getElementById('checkoutModal').classList.remove('hidden'); setTimeout(()=>document.querySelector('.modal-content').classList.add('show'),50);}
 function closeCheckout(){ document.querySelector('.modal-content').classList.remove('show'); setTimeout(()=>document.getElementById('checkoutModal').classList.add('hidden'),300);}
 
-// Form submission
 document.getElementById('checkoutForm').addEventListener('submit', async e=>{
   e.preventDefault();
   const form = e.target;
