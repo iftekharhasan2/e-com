@@ -1,25 +1,18 @@
 // api/sub.js
 import { MongoClient } from 'mongodb';
 
-// 🔗 Your MongoDB Atlas connection string
-// ⚠️ For production: Move this to Vercel Environment Variables
+// 🔗 MongoDB Atlas connection string
+// ⚠️ Move to Vercel Environment Variables in production
 const MONGODB_URI = 'mongodb+srv://adnaninsky:980Orwo7M5xB8fnh@cluster0.bd9ywas.mongodb.net';
 
 export default async function handler(req, res) {
-  // CORS headers for frontend access
+  // CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  
-  // Handle preflight requests
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
 
-  // Only allow POST requests
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const client = new MongoClient(MONGODB_URI);
 
@@ -34,14 +27,15 @@ export default async function handler(req, res) {
     if (!address?.trim()) errors.push('Address is required');
     if (!transactionId?.trim()) errors.push('Transaction ID is required');
     if (!total || isNaN(parseFloat(total))) errors.push('Valid total amount is required');
-    
+    if (!Array.isArray(items) || items.length === 0) errors.push('Cart items are required');
+
     if (errors.length > 0) {
       return res.status(400).json({ error: errors.join(', ') });
     }
 
-    // Connect to MongoDB Atlas
+    // Connect to MongoDB
     await client.connect();
-    const db = client.db('Ahya'); // Database name
+    const db = client.db('Ahya');
     const collection = db.collection('orders');
 
     // Create order document
@@ -52,10 +46,16 @@ export default async function handler(req, res) {
       address: address.trim(),
       transactionId: transactionId.trim().toUpperCase(),
       total: parseFloat(total),
-      items: items || '',
-      status: 'pending', // ✅ For admin panel: 'pending' or 'finished'
+      items: items.map(item => ({
+        id: item.id || null,
+        name: item.name,
+        price: parseFloat(item.price),
+        quantity: parseInt(item.quantity),
+        subtotal: parseFloat(item.price) * parseInt(item.quantity)
+      })), // store items as objects
+      status: 'pending',
       paymentMethod: 'bKash',
-      paymentOnDelivery: true, // ✅ Your preference
+      paymentOnDelivery: true,
       createdAt: new Date(),
       updatedAt: new Date()
     };
@@ -72,12 +72,11 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error('🔥 Order submission error:', error);
-    return res.status(500).json({ 
+    return res.status(500).json({
       error: 'Failed to process order',
       details: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   } finally {
-    // Always close connection to prevent leaks
     await client.close();
   }
 }
