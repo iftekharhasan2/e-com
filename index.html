@@ -97,7 +97,7 @@ body { background-color: #faf7f2; color: #1e1b1b; scroll-behavior: smooth; }
               <span class="font-bold text-gray-700">Subtotal:</span>
               <span id="cart-subtotal" class="font-semibold text-gray-900">$0.00</span>
             </div>
-            <button class="mt-3 w-full bg-brand-green hover:bg-green-600 text-white py-2 rounded-lg font-semibold transition">Checkout</button>
+            <button onclick="openCheckout()" class="mt-3 w-full bg-brand-green hover:bg-green-600 text-white py-2 rounded-lg font-semibold transition">Checkout</button>
           </div>
         </div>
 
@@ -110,7 +110,6 @@ body { background-color: #faf7f2; color: #1e1b1b; scroll-behavior: smooth; }
   </div>
 </nav>
 
-<!-- HERO -->
 <!-- HERO SECTION -->
 <section class="relative hero-section h-screen flex items-center justify-center">
   <img 
@@ -118,7 +117,6 @@ body { background-color: #faf7f2; color: #1e1b1b; scroll-behavior: smooth; }
     alt="Trendy Clothing Collection"
     class="w-full h-full object-cover"
   >
-  <!-- Overlay -->
   <div class="absolute inset-0 bg-black/30 flex items-end">
     <div class="max-w-7xl mx-auto px-4 pb-16 w-full">
       <div class="max-w-3xl">
@@ -249,9 +247,9 @@ body { background-color: #faf7f2; color: #1e1b1b; scroll-behavior: smooth; }
     <div>
       <h4 class="font-bold text-white mb-2 text-sm">Contact</h4>
       <ul class="space-y-1 text-gray-400 text-sm">
-        <li><i class="fas fa-map-marker-alt text-brand-green mr-2"></i>Satkania,Chattogram</li>
+        <li><i class="fas fa-map-marker-alt text-brand-green mr-2"></i>Satkania, Chattogram</li>
         <li><i class="fas fa-phone-alt text-brand-green mr-2"></i>+880 17 4264 6973</li>
-        <li><i class="fas fa-envelope text-brand-green mr-2"></i>ayha@gamail.com</li>
+        <li><i class="fas fa-envelope text-brand-green mr-2"></i>ayha@gmail.com</li>
       </ul>
     </div>
   </div>
@@ -268,10 +266,8 @@ const products = [
   {id:1, name:"Men's T-Shirt", price:1200, image:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=600&q=80", desc:"Comfortable cotton t-shirt, perfect for daily wear."},
   {id:2, name:"Women's Kurta", price:1800, image:"https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=600&q=80", desc:"Elegant and traditional kurta, made with premium fabric."},
   {id:3, name:"Men's Chinos", price:2200, image:"https://images.unsplash.com/photo-1593032465175-481ac7f401a0?auto=format&fit=crop&w=600&q=80", desc:"Slim-fit chinos, stylish and comfortable."},
-
 ];
 
-let cart = {};
 let quantities = {};
 
 function renderProducts(){
@@ -281,15 +277,15 @@ function renderProducts(){
     return `
     <article class="glass-card overflow-hidden flex flex-col">
       <img src="${p.image}" alt="${p.name}" class="h-60 w-full object-cover">
-      <div class="p-4 flex flex-col flex-grow">
-        <h3 class="font-bold text-lg mb-1">${p.name}</h3>
-        <p class="text-gray-600 mb-3 flex-grow">${p.desc}</p>
-        <div class="flex justify-between items-center mt-auto">
-          <span class="font-semibold text-brand-green">৳${p.price}</span>
+      <div class="p-4 flex-1 flex flex-col justify-between">
+        <h3 class="font-semibold text-gray-900 mb-1">${p.name}</h3>
+        <p class="text-gray-600 text-sm mb-2">${p.desc}</p>
+        <div class="mt-auto flex items-center justify-between">
+          <span class="font-bold text-brand-green">৳${p.price}</span>
           <div class="qty-control">
-            <button onclick="changeQty(${p.id},-1)" class="qty-btn" ${qty===0?'disabled':''}><i class="fas fa-minus"></i></button>
+            <button class="qty-btn" onclick="changeQty(${p.id},-1)" ${qty===0?'disabled':''}>-</button>
             <span class="qty-value">${qty}</span>
-            <button onclick="changeQty(${p.id},1)" class="qty-btn"><i class="fas fa-plus"></i></button>
+            <button class="qty-btn" onclick="changeQty(${p.id},1)">+</button>
           </div>
         </div>
       </div>
@@ -297,67 +293,54 @@ function renderProducts(){
   }).join('');
 }
 
-function changeQty(id, delta){
-  quantities[id] = Math.max(0,(quantities[id]||0)+delta);
-  renderProducts();
-  updateCart();
-}
-
-function toggleCart(){
-  document.getElementById('cartSidebar').classList.toggle('open');
+function changeQty(id,delta){
+  quantities[id] = Math.max((quantities[id]||0)+delta,0);
+  renderProducts(); updateCart();
 }
 
 function updateCart(){
-  const cartContainer = document.getElementById('cart-items');
-  const cartCount = Object.values(quantities).reduce((a,b)=>a+b,0);
-  document.getElementById('cart-count').textContent = cartCount;
-  let subtotal = 0;
-  cartContainer.innerHTML = '';
-  for(const p of products){
-    const qty = quantities[p.id]||0;
-    if(qty>0){
-      const itemTotal = p.price*qty;
-      subtotal += itemTotal;
-      cartContainer.innerHTML += `
-      <div class="flex justify-between items-center mb-3 border-b pb-2">
-        <div>
-          <h4 class="font-medium">${p.name}</h4>
-          <span class="text-sm text-gray-500">${qty} × ৳${p.price}</span>
-        </div>
-        <span class="font-semibold text-brand-green">৳${itemTotal}</span>
-      </div>`;
-    }
+  const cartItems = document.getElementById('cart-items');
+  const items = products.filter(p=>quantities[p.id]>0);
+  if(items.length===0){
+    cartItems.innerHTML='<p class="text-gray-500 text-sm">No items in cart</p>';
+    document.getElementById('cart-count').textContent=0;
+    document.getElementById('cart-subtotal').textContent='৳0';
+    document.getElementById('checkout-total').textContent='৳0';
+    return;
   }
-  document.getElementById('cart-subtotal').textContent = `৳${subtotal}`;
-  document.getElementById('checkout-total').textContent = `৳${subtotal}`;
+  cartItems.innerHTML=items.map(p=>`
+    <div class="flex justify-between items-center">
+      <span class="text-gray-700">${p.name} x ${quantities[p.id]}</span>
+      <span class="font-semibold text-gray-900">৳${p.price*quantities[p.id]}</span>
+    </div>
+  `).join('');
+  const subtotal = items.reduce((acc,p)=>acc+p.price*quantities[p.id],0);
+  document.getElementById('cart-count').textContent=items.length;
+  document.getElementById('cart-subtotal').textContent=`৳${subtotal}`;
+  document.getElementById('checkout-total').textContent=`৳${subtotal}`;
 }
 
-function openCheckout(){ document.getElementById('checkoutModal').classList.remove('hidden'); setTimeout(()=>document.querySelector('.modal-content').classList.add('show'),50);}
-function closeCheckout(){ document.querySelector('.modal-content').classList.remove('show'); setTimeout(()=>document.getElementById('checkoutModal').classList.add('hidden'),300);}
+function toggleCart(){document.getElementById('cartSidebar').classList.toggle('open');}
+function openCheckout(){document.getElementById('checkoutModal').classList.remove('hidden'); setTimeout(()=>document.querySelector('.modal-content').classList.add('show'),50);}
+function closeCheckout(){document.querySelector('.modal-content').classList.remove('show'); setTimeout(()=>document.getElementById('checkoutModal').classList.add('hidden'),300);}
 
-document.getElementById('checkoutForm').addEventListener('submit', async e=>{
+document.getElementById('checkoutForm').addEventListener('submit',async e=>{
   e.preventDefault();
   const form = e.target;
   const items = products.filter(p=>quantities[p.id]>0).map(p=>({id:p.id,name:p.name,price:p.price,quantity:quantities[p.id]}));
-  if(items.length===0){ alert('Cart is empty!'); return;}
+  if(items.length===0){alert('Cart is empty!'); return;}
   const total = items.reduce((acc,i)=>acc+i.price*i.quantity,0);
-  const data = {
-    name: form.name.value,
-    phone: form.phone.value,
-    email: form.email.value,
-    address: form.address.value,
-    transactionId: form.transactionId.value,
-    total, items
-  };
+  const data = {name:form.name.value,phone:form.phone.value,email:form.email.value,address:form.address.value,transactionId:form.transactionId.value,total,items};
   try{
-    const res = await fetch('/api/sub', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data)});
+    const res = await fetch('/api/sub',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
     const json = await res.json();
-    if(json.success){ alert('Order placed! Transaction ID: '+json.transactionId); quantities={}; renderProducts(); updateCart(); closeCheckout();}
-    else alert('Error: '+json.error);
-  }catch(err){ console.error(err); alert('Submission failed.');}
+    if(json.success){alert('Order placed! Transaction ID: '+json.transactionId); quantities={}; renderProducts(); updateCart(); closeCheckout();}
+    else{alert('Error: '+json.error);}
+  }catch(err){console.error(err); alert('Submission failed.');}
 });
 
-document.addEventListener('DOMContentLoaded', ()=>{ renderProducts(); updateCart(); });
+renderProducts();
+updateCart();
 </script>
 
 </body>
