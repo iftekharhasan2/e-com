@@ -320,7 +320,7 @@ function updateCart(){
   document.getElementById('checkout-total').textContent=`৳${subtotal}`;
 }
 
-function toggleCart(){document.getElementById('cartSidebar').classList.toggle('open');}
+<!-- function toggleCart(){document.getElementById('cartSidebar').classList.toggle('open');} -->
 function openCheckout(){document.getElementById('checkoutModal').classList.remove('hidden'); setTimeout(()=>document.querySelector('.modal-content').classList.add('show'),50);}
 function closeCheckout(){document.querySelector('.modal-content').classList.remove('show'); setTimeout(()=>document.getElementById('checkoutModal').classList.add('hidden'),300);}
 
