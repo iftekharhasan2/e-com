@@ -3,29 +3,98 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UrbanStyle Clothing</title>
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<title>URBOR | Trendy Clothing Collection</title>
+<meta name="description" content="URBOR Clothing – Stylish, comfortable, and sustainable fashion for men and women. Shop online with secure checkout.">
+
+<!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
-<style>
-  .btn-premium {
-    background: #1a202c; color: white; transition: all 0.3s;
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        'brand-green': '#2d6a4f',
+        'brand-green-dark': '#1b4332',
+        'brand-green-light': '#40916c',
+        'brand-cream': '#faf7f2',
+      },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+        display: ['Playfair Display', 'serif'],
+      }
+    }
   }
-  .btn-premium:hover { background: #4a5568; }
+}
+</script>
+
+<style>
+body { background-color: #faf7f2; color: #1e1b1b; scroll-behavior: smooth; }
+.glass-card { background: rgba(250,255,255,0.9); border: 1px solid rgba(45,106,79,0.15); border-radius:1rem; transition: all 0.3s ease;}
+.glass-card:hover { transform: translateY(-4px); box-shadow:0 20px 40px -10px rgba(45,106,79,0.15); border-color: rgba(45,106,79,0.3);}
+.btn-brand { background: linear-gradient(145deg,#2d6a4f,#1b4332); color:white; font-weight:500; transition: all 0.3s ease; border:none; }
+.btn-brand:hover { transform: translateY(-2px); box-shadow:0 12px 28px -8px #2d6a4f99; }
+.qty-control { display:flex; align-items:center; gap:0; background:#f0eae4; border-radius:10px; overflow:hidden; border:1px solid rgba(45,106,79,0.15);}
+.qty-btn { width:36px; height:36px; display:flex; align-items:center; justify-content:center; background:transparent; border:none; color:#2d6a4f; font-size:14px; cursor:pointer; }
+.qty-btn:hover { background: rgba(45,106,79,0.1);}
+.qty-btn:disabled { opacity:0.4; cursor:not-allowed;}
+.qty-value { min-width:36px; text-align:center; font-weight:600; font-size:14px; }
+#cartSidebar { transition: all 0.3s ease-in-out; transform: translateX(100%); }
+#cartSidebar.open { transform: translateX(0); }
+.modal-bg { background: rgba(0,0,0,0.5); }
+.modal-content { transition: all 0.3s ease-in-out; transform: translateY(-20px); opacity:0; }
+.modal-content.show { transform: translateY(0); opacity:1; }
+.cart-scroll::-webkit-scrollbar { width: 4px; }
+.cart-scroll::-webkit-scrollbar-thumb { background: #2d6a4f; border-radius: 4px; }
 </style>
 </head>
-<body class="bg-gray-50 font-sans">
+<body class="antialiased relative">
 
+<!-- NAVIGATION -->
+<nav class="fixed w-full z-50 glass-card border-b border-white/30">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center">
+      <div class="flex items-center gap-3 text-xl font-display font-bold text-brand-green">URBOR <span class="text-brand-green-dark">Clothing</span></div>
+      <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
+        <a href="#products" class="text-gray-800 hover:text-brand-green">Shop</a>
+        <a href="#testimonials" class="text-gray-800 hover:text-brand-green">Testimonials</a>
+        <a href="#faq" class="text-gray-800 hover:text-brand-green">FAQ</a>
+      </div>
+      <div class="flex items-center space-x-4">
+        <button onclick="toggleCart()" class="relative flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 px-4 py-2 rounded-lg transition shadow-sm">
+          <i class="fas fa-shopping-cart text-lg text-brand-green"></i>
+          <span class="hidden sm:inline text-sm font-bold">Cart</span>
+          <span id="cart-count" class="flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-brand-green rounded-full">0</span>
+        </button>
+        <button id="mobile-menu-btn" class="md:hidden text-xl text-gray-800"><i class="fas fa-bars"></i></button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
 <!-- HERO SECTION -->
-<section class="relative hero-section h-[450px]">
-  <img src="https://images.unsplash.com/photo-1593032465172-c1c6362b40d3?auto=format&fit=crop&w=1200&q=80"
-  alt="UrbanStyle clothing"
-  class="w-full h-full object-cover">
-  <div class="absolute inset-0 bg-black/40 flex items-end">
-    <div class="max-w-7xl mx-auto px-4 pb-10 w-full">
+<section class="relative hero-section pt-16">
+  <img 
+    src="https://images.unsplash.com/photo-1593032465175-481ac7f401a0?auto=format&fit=crop&w=600&q=80"
+    alt="Trendy Clothing Collection"
+    class="w-full h-full object-cover"
+  >
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-black/30 flex items-end">
+    <div class="max-w-7xl mx-auto px-4 pb-16 w-full">
       <div class="max-w-3xl">
-        <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2">UrbanStyle Clothing</h1>
-        <p class="text-white/90 text-lg md:text-xl mb-4">Trendy • Premium Quality • Delivered to Your Door</p>
-        <a href="#products" class="inline-flex items-center gap-2 btn-premium px-6 py-3 rounded-lg text-base font-medium">
+        <h1 class="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4">
+          Trendy & Sustainable Fashion
+        </h1>
+        <p class="text-white/90 text-lg md:text-xl mb-6">
+          Stylish clothing • Comfortable fit • Ethically made
+        </p>
+        <a href="#products" class="inline-flex items-center gap-2 bg-brand-green hover:bg-brand-green-dark text-white px-8 py-4 rounded-lg text-base font-medium transition">
           Shop Now
           <i class="fas fa-arrow-down"></i>
         </a>
@@ -34,244 +103,228 @@
   </div>
 </section>
 
-<!-- PRODUCTS SECTION -->
-<section id="products" class="py-12 max-w-7xl mx-auto px-4">
-  <h2 class="text-3xl font-bold mb-6 text-center">Our Collection</h2>
-  <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    <!-- JS will render product cards here -->
+<!-- PRODUCTS -->
+<section id="products" class="py-20 bg-brand-cream">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center max-w-2xl mx-auto mb-12">
+      <span class="text-brand-green uppercase tracking-wider text-xs font-semibold">Collection</span>
+      <h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900 mt-2 mb-3">Featured Products</h2>
+      <p class="text-gray-600">Stylish and comfortable clothing for men and women. Shop your favorites below.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" id="product-container"></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials" class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 text-center mb-12">
+    <h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900">What Our Customers Say</h2>
+    <p class="text-gray-600 mt-2">Real feedback from our happy fashion lovers.</p>
+  </div>
+  <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="glass-card p-6">
+      <p class="text-gray-700 italic">"Love the quality of the t-shirts! Very comfortable and stylish."</p>
+      <h4 class="mt-4 font-bold text-brand-green">— Ahsan, Dhaka</h4>
+    </div>
+    <div class="glass-card p-6">
+      <p class="text-gray-700 italic">"The kurta I ordered fits perfectly and looks amazing. Highly recommend!"</p>
+      <h4 class="mt-4 font-bold text-brand-green">— Farhana, Chattogram</h4>
+    </div>
+    <div class="glass-card p-6">
+      <p class="text-gray-700 italic">"Fast delivery and excellent customer service. Will buy again."</p>
+      <h4 class="mt-4 font-bold text-brand-green">— Rafiq, Sylhet</h4>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="py-20 bg-brand-cream">
+  <div class="max-w-7xl mx-auto px-4 text-center mb-12">
+    <h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900">Frequently Asked Questions</h2>
+    <p class="text-gray-600 mt-2">Common questions about our clothing line and services.</p>
+  </div>
+  <div class="max-w-3xl mx-auto space-y-4">
+    <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+      <h3 class="font-bold text-brand-green cursor-pointer">What sizes are available?</h3>
+      <p class="mt-2 text-gray-700">We offer sizes XS to XXL for all products.</p>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+      <h3 class="font-bold text-brand-green cursor-pointer">Do you offer international shipping?</h3>
+      <p class="mt-2 text-gray-700">Currently, we only ship within Bangladesh.</p>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+      <h3 class="font-bold text-brand-green cursor-pointer">Can I return or exchange?</h3>
+      <p class="mt-2 text-gray-700">Yes! We accept returns or exchanges within 7 days of delivery for unworn items.</p>
+    </div>
   </div>
 </section>
 
 <!-- CART SIDEBAR -->
-<div id="cart-sidebar" class="fixed right-0 top-0 h-full w-96 bg-white shadow-lg z-50 transform translate-x-full transition-transform duration-300">
-  <div class="p-6 flex justify-between items-center border-b">
-    <h3 class="text-xl font-bold">Your Cart</h3>
-    <button onclick="toggleCart()" class="text-gray-500 hover:text-red-500"><i class="fas fa-times"></i></button>
+<div id="cartSidebar" class="fixed top-0 right-0 w-80 h-full bg-white shadow-2xl z-50 flex flex-col">
+  <div class="flex justify-between items-center p-4 border-b">
+    <h2 class="font-bold text-lg text-brand-green">Your Cart</h2>
+    <button onclick="toggleCart()" class="text-gray-700 hover:text-brand-green"><i class="fas fa-times"></i></button>
   </div>
-  <div id="cart-items" class="p-6 flex-1 overflow-y-auto"></div>
-  <div class="p-6 border-t">
-    <p class="mb-4 text-lg">Subtotal: <span id="cart-subtotal" class="font-bold">৳0.00</span></p>
-    <button onclick="proceedToCheckout()" class="w-full btn-premium py-3 rounded-lg flex justify-center items-center gap-2">
-      Checkout
-      <i class="fas fa-credit-card"></i>
-    </button>
+  <div class="flex-1 overflow-y-auto p-4 cart-scroll" id="cart-items"></div>
+  <div class="p-4 border-t">
+    <div class="flex justify-between font-semibold mb-4">
+      <span>Subtotal:</span>
+      <span id="cart-subtotal">৳0</span>
+    </div>
+    <button onclick="openCheckout()" class="btn-brand w-full py-3 rounded-lg">Checkout</button>
   </div>
 </div>
 
 <!-- CHECKOUT MODAL -->
-<div id="checkout-modal" class="fixed inset-0 bg-black/50 z-[80] hidden items-center justify-center px-4">
-  <div class="bg-white rounded-2xl max-w-md w-full p-6 relative">
-    <button onclick="closeCheckoutModal()" class="absolute top-4 right-4 text-gray-400 hover:text-red-500">
-      <i class="fas fa-times text-xl"></i>
-    </button>
-    <h2 class="text-2xl font-bold text-gray-900 mb-4">Checkout</h2>
-    <form id="checkout-form" class="space-y-4">
-      <input type="text" name="name" placeholder="Full Name" class="w-full p-3 rounded-lg border border-gray-300" required>
-      <input type="text" name="phone" placeholder="Phone Number" class="w-full p-3 rounded-lg border border-gray-300" required>
-      <input type="email" name="email" placeholder="Email" class="w-full p-3 rounded-lg border border-gray-300" required>
-      <textarea name="address" placeholder="Shipping Address" class="w-full p-3 rounded-lg border border-gray-300" required></textarea>
-      <input type="text" name="transactionId" placeholder="bKash Transaction ID" class="w-full p-3 rounded-lg border border-gray-300" required>
-      <div class="text-gray-700 text-sm mb-2">
-        <strong>Order Summary:</strong>
-        <ul id="checkout-summary" class="list-disc pl-5 mt-1 text-gray-600"></ul>
-        <p class="mt-2">Subtotal: <span id="checkout-total" class="font-bold">৳0.00</span></p>
+<div id="checkoutModal" class="fixed inset-0 hidden items-center justify-center modal-bg z-50">
+  <div class="bg-white rounded-xl max-w-md w-full p-6 modal-content">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-xl font-bold text-brand-green">Checkout</h3>
+      <button onclick="closeCheckout()" class="text-gray-600 hover:text-brand-green"><i class="fas fa-times"></i></button>
+    </div>
+    <form id="checkoutForm" class="space-y-3">
+      <input type="text" name="name" placeholder="Full Name" class="w-full border px-3 py-2 rounded-md" required>
+      <input type="tel" name="phone" placeholder="Phone Number" class="w-full border px-3 py-2 rounded-md" required>
+      <input type="email" name="email" placeholder="Email" class="w-full border px-3 py-2 rounded-md" required>
+      <input type="text" name="address" placeholder="Delivery Address" class="w-full border px-3 py-2 rounded-md" required>
+      <input type="text" name="transactionId" placeholder="bKash Transaction ID" class="w-full border px-3 py-2 rounded-md" required>
+      <div class="flex justify-between font-semibold">
+        <span>Total:</span>
+        <span id="checkout-total">৳0</span>
       </div>
-      <button type="submit" class="w-full btn-premium py-3 rounded-lg text-sm font-medium flex justify-center items-center gap-2">
-        Place Order
-        <i class="fas fa-paper-plane"></i>
-      </button>
+      <button type="submit" class="btn-brand w-full py-3 rounded-lg">Place Order</button>
     </form>
-    <div id="checkout-message" class="mt-4 text-sm"></div>
   </div>
 </div>
 
-<!-- FAQ SECTION -->
-<section id="faq" class="py-12 bg-gray-100">
-  <div class="max-w-5xl mx-auto px-4">
-    <h2 class="text-3xl font-bold mb-6 text-center">Frequently Asked Questions</h2>
-    <div class="space-y-4">
-      <details class="p-4 border rounded-lg">
-        <summary class="font-semibold cursor-pointer">What sizes do you offer?</summary>
-        <p class="mt-2 text-gray-600">We offer XS to XXL for all our clothing items.</p>
-      </details>
-      <details class="p-4 border rounded-lg">
-        <summary class="font-semibold cursor-pointer">Do you offer returns?</summary>
-        <p class="mt-2 text-gray-600">Yes! We have a 7-day return policy for unused items.</p>
-      </details>
-      <details class="p-4 border rounded-lg">
-        <summary class="font-semibold cursor-pointer">How long is shipping?</summary>
-        <p class="mt-2 text-gray-600">Delivery usually takes 3–5 business days.</p>
-      </details>
+<!-- FOOTER -->
+<footer class="bg-gray-950 text-gray-300 pt-12 pb-6">
+  <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+    <div class="md:col-span-2">
+      <h3 class="text-2xl font-display font-bold text-white">URBOR <span class="text-brand-green">Clothing</span></h3>
+      <p class="text-gray-400 mt-2 text-sm">Stylish, comfortable, and sustainable clothing delivered to your door.</p>
+    </div>
+    <div>
+      <h4 class="font-bold text-white mb-2 text-sm">Explore</h4>
+      <ul class="space-y-1 text-gray-400 text-sm">
+        <li><a href="#products" class="hover:text-brand-green">Shop</a></li>
+        <li><a href="#testimonials" class="hover:text-brand-green">Testimonials</a></li>
+        <li><a href="#faq" class="hover:text-brand-green">FAQ</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-bold text-white mb-2 text-sm">Contact</h4>
+      <ul class="space-y-1 text-gray-400 text-sm">
+        <li><i class="fas fa-map-marker-alt text-brand-green mr-2"></i>Dhaka, Bangladesh</li>
+        <li><i class="fas fa-phone-alt text-brand-green mr-2"></i>+880 17 4264 6973</li>
+        <li><i class="fas fa-envelope text-brand-green mr-2"></i>support@urbor.com</li>
+      </ul>
     </div>
   </div>
-</section>
-
-<!-- TESTIMONIALS SECTION -->
-<section id="testimonials" class="py-12 max-w-7xl mx-auto px-4">
-  <h2 class="text-3xl font-bold mb-6 text-center">What Our Customers Say</h2>
-  <div class="grid md:grid-cols-3 gap-6">
-    <div class="bg-white p-6 rounded-xl shadow">
-      <p class="text-gray-700 mb-4">"Love the quality! My outfits arrived quickly and fit perfectly."</p>
-      <p class="font-bold text-gray-900">— Ayesha R.</p>
-    </div>
-    <div class="bg-white p-6 rounded-xl shadow">
-      <p class="text-gray-700 mb-4">"Excellent service and stylish clothes. Highly recommend UrbanStyle."</p>
-      <p class="font-bold text-gray-900">— Jamal K.</p>
-    </div>
-    <div class="bg-white p-6 rounded-xl shadow">
-      <p class="text-gray-700 mb-4">"The checkout was smooth, and the bKash payment worked perfectly."</p>
-      <p class="font-bold text-gray-900">— Farhana S.</p>
-    </div>
+  <div class="border-t border-gray-700 pt-4 text-center text-gray-500 text-xs">
+    © <span id="year"></span> URBOR Clothing — Style, Comfort, Sustainability.
   </div>
-</section>
+</footer>
 
-<!-- JS: PRODUCTS, CART & CHECKOUT -->
 <script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Sample products
 const products = [
-  {id:1,name:"Classic White Shirt",price:1299,image:"https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=600&q=80"},
-  {id:2,name:"Denim Jacket",price:2999,image:"https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=600&q=80"},
-  {id:3,name:"Urban Hoodie",price:1899,image:"https://images.unsplash.com/photo-1581567383264-ef2b2127e0e4?auto=format&fit=crop&w=600&q=80"},
-  {id:4,name:"Slim Fit Pants",price:1499,image:"https://images.unsplash.com/photo-1593032465172-c1c6362b40d3?auto=format&fit=crop&w=600&q=80"}
+  {id:1, name:"Men's T-Shirt", price:1200, image:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=600&q=80", desc:"Comfortable cotton t-shirt, perfect for daily wear."},
+  {id:2, name:"Women's Kurta", price:1800, image:"https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=600&q=80", desc:"Elegant and traditional kurta, made with premium fabric."},
+  {id:3, name:"Men's Chinos", price:2200, image:"https://images.unsplash.com/photo-1593032465175-481ac7f401a0?auto=format&fit=crop&w=600&q=80", desc:"Slim-fit chinos, stylish and comfortable."},
+  {id:4, name:"Women's Dress", price:2500, image:"https://images.unsplash.com/photo-1616595327722-7b7d7ecb3f68?auto=format&fit=crop&w=600&q=80", desc:"Flowy summer dress, perfect for outings."},
 ];
 
 let cart = {};
-let productQuantities = {};
+let quantities = {};
 
-function renderProducts() {
-  const grid = document.getElementById('products-grid');
-  grid.innerHTML = '';
-  products.forEach(p=>{
-    const card = document.createElement('div');
-    card.className='bg-white p-4 rounded-xl shadow hover:shadow-lg transition cursor-pointer flex flex-col';
-    card.innerHTML=`
-      <img src="${p.image}" class="rounded-lg h-48 object-cover mb-4">
-      <h3 class="font-bold text-lg mb-1">${p.name}</h3>
-      <p class="text-gray-700 mb-2">৳${p.price}</p>
-      <button onclick="addToCart(${p.id})" class="btn-premium py-2 rounded-lg mt-auto flex justify-center items-center gap-2">
-        Add to Cart
-        <i class="fas fa-shopping-cart"></i>
-      </button>
-    `;
-    grid.appendChild(card);
-  });
+function renderProducts(){
+  const container = document.getElementById('product-container');
+  container.innerHTML = products.map(p=>{
+    const qty = quantities[p.id]||0;
+    return `
+    <article class="glass-card overflow-hidden flex flex-col">
+      <img src="${p.image}" alt="${p.name}" class="h-60 w-full object-cover">
+      <div class="p-4 flex flex-col flex-grow">
+        <h3 class="font-bold text-lg mb-1">${p.name}</h3>
+        <p class="text-gray-600 mb-3 flex-grow">${p.desc}</p>
+        <div class="flex justify-between items-center mt-auto">
+          <span class="font-semibold text-brand-green">৳${p.price}</span>
+          <div class="qty-control">
+            <button onclick="changeQty(${p.id},-1)" class="qty-btn" ${qty===0?'disabled':''}><i class="fas fa-minus"></i></button>
+            <span class="qty-value">${qty}</span>
+            <button onclick="changeQty(${p.id},1)" class="qty-btn"><i class="fas fa-plus"></i></button>
+          </div>
+        </div>
+      </div>
+    </article>`;
+  }).join('');
+}
+
+function changeQty(id, delta){
+  quantities[id] = Math.max(0,(quantities[id]||0)+delta);
+  renderProducts();
+  updateCart();
 }
 
 function toggleCart(){
-  const sidebar=document.getElementById('cart-sidebar');
-  sidebar.classList.toggle('translate-x-full');
+  document.getElementById('cartSidebar').classList.toggle('open');
 }
 
-function addToCart(id){
-  const product = products.find(p=>p.id===id);
-  if(cart[id]){
-    cart[id].quantity+=1;
-  }else{
-    cart[id]={...product,quantity:1};
-  }
-  updateCartUI();
-  toggleCart();
-}
-
-function removeFromCart(id){
-  delete cart[id];
-  updateCartUI();
-}
-
-function updateCartUI(){
-  const cartItems=document.getElementById('cart-items');
-  cartItems.innerHTML='';
-  let subtotal=0;
-  Object.values(cart).forEach(item=>{
-    subtotal+=item.price*item.quantity;
-    const div=document.createElement('div');
-    div.className='flex justify-between items-center mb-4';
-    div.innerHTML=`
-      <div>
-        <h4 class="font-semibold">${item.name}</h4>
-        <p class="text-gray-600">৳${item.price} x ${item.quantity} = ৳${(item.price*item.quantity).toFixed(2)}</p>
-      </div>
-      <div class="flex flex-col gap-1">
-        <button onclick="addToCart(${item.id})" class="text-green-500"><i class="fas fa-plus"></i></button>
-        <button onclick="decreaseQty(${item.id})" class="text-red-500"><i class="fas fa-minus"></i></button>
-      </div>
-      <button onclick="removeFromCart(${item.id})" class="ml-2 text-gray-400 hover:text-red-500"><i class="fas fa-trash"></i></button>
-    `;
-    cartItems.appendChild(div);
-  });
-  document.getElementById('cart-subtotal').textContent='৳'+subtotal.toFixed(2);
-}
-
-function decreaseQty(id){
-  if(cart[id].quantity>1){
-    cart[id].quantity-=1;
-  } else{
-    removeFromCart(id);
-  }
-  updateCartUI();
-}
-
-// CHECKOUT
-function proceedToCheckout() {
-  if(Object.keys(cart).length===0){ alert('Cart is empty'); return; }
-  const summaryEl=document.getElementById('checkout-summary');
-  summaryEl.innerHTML='';
-  Object.values(cart).forEach(item=>{
-    const li=document.createElement('li');
-    li.textContent=`${item.name} x ${item.quantity} - ৳${(item.price*item.quantity).toFixed(2)}`;
-    summaryEl.appendChild(li);
-  });
-  const totalEl=document.getElementById('checkout-total');
-  const total=Object.values(cart).reduce((sum,i)=>sum+i.price*i.quantity,0);
-  totalEl.textContent='৳'+total.toFixed(2);
-  document.getElementById('checkout-modal').classList.remove('hidden');
-  document.body.style.overflow='hidden';
-}
-
-function closeCheckoutModal(){
-  document.getElementById('checkout-modal').classList.add('hidden');
-  document.body.style.overflow='auto';
-}
-
-document.getElementById('checkout-form').addEventListener('submit', async function(e){
-  e.preventDefault();
-  const form=this;
-  const formData={
-    name:form.name.value,
-    phone:form.phone.value,
-    email:form.email.value,
-    address:form.address.value,
-    transactionId:form.transactionId.value,
-    total:Object.values(cart).reduce((sum,i)=>sum+i.price*i.quantity,0),
-    items:Object.values(cart)
-  };
-  const messageEl=document.getElementById('checkout-message');
-  messageEl.textContent='Processing order...';
-  try{
-    const res=await fetch('/api/sub',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify(formData)
-    });
-    const data=await res.json();
-    if(res.ok){
-      messageEl.classList.add('text-green-600');
-      messageEl.textContent=`✅ Order placed successfully! Transaction ID: ${data.transactionId}`;
-      cart={};
-      productQuantities={};
-      updateCartUI();
-      renderProducts();
-    }else{
-      messageEl.classList.add('text-red-600');
-      messageEl.textContent=`❌ ${data.error||'Failed to place order'}`;
+function updateCart(){
+  const cartContainer = document.getElementById('cart-items');
+  const cartCount = Object.values(quantities).reduce((a,b)=>a+b,0);
+  document.getElementById('cart-count').textContent = cartCount;
+  let subtotal = 0;
+  cartContainer.innerHTML = '';
+  for(const p of products){
+    const qty = quantities[p.id]||0;
+    if(qty>0){
+      const itemTotal = p.price*qty;
+      subtotal += itemTotal;
+      cartContainer.innerHTML += `
+      <div class="flex justify-between items-center mb-3 border-b pb-2">
+        <div>
+          <h4 class="font-medium">${p.name}</h4>
+          <span class="text-sm text-gray-500">${qty} × ৳${p.price}</span>
+        </div>
+        <span class="font-semibold text-brand-green">৳${itemTotal}</span>
+      </div>`;
     }
-  }catch(err){
-    console.error(err);
-    messageEl.classList.add('text-red-600');
-    messageEl.textContent='❌ Network or server error.';
   }
+  document.getElementById('cart-subtotal').textContent = `৳${subtotal}`;
+  document.getElementById('checkout-total').textContent = `৳${subtotal}`;
+}
+
+function openCheckout(){ document.getElementById('checkoutModal').classList.remove('hidden'); setTimeout(()=>document.querySelector('.modal-content').classList.add('show'),50);}
+function closeCheckout(){ document.querySelector('.modal-content').classList.remove('show'); setTimeout(()=>document.getElementById('checkoutModal').classList.add('hidden'),300);}
+
+document.getElementById('checkoutForm').addEventListener('submit', async e=>{
+  e.preventDefault();
+  const form = e.target;
+  const items = products.filter(p=>quantities[p.id]>0).map(p=>({id:p.id,name:p.name,price:p.price,quantity:quantities[p.id]}));
+  if(items.length===0){ alert('Cart is empty!'); return;}
+  const total = items.reduce((acc,i)=>acc+i.price*i.quantity,0);
+  const data = {
+    name: form.name.value,
+    phone: form.phone.value,
+    email: form.email.value,
+    address: form.address.value,
+    transactionId: form.transactionId.value,
+    total, items
+  };
+  try{
+    const res = await fetch('/api/sub', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data)});
+    const json = await res.json();
+    if(json.success){ alert('Order placed! Transaction ID: '+json.transactionId); quantities={}; renderProducts(); updateCart(); closeCheckout();}
+    else alert('Error: '+json.error);
+  }catch(err){ console.error(err); alert('Submission failed.');}
 });
 
-renderProducts();
+document.addEventListener('DOMContentLoaded', ()=>{ renderProducts(); updateCart(); });
 </script>
+
 </body>
 </html>
