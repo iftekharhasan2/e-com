@@ -1,198 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ahya Store</title>
-  <style>
-    /* Basic Reset */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: Arial, sans-serif; line-height: 1.6; background: #f5f5f5; color: #333; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ahya Store</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; font-family: 'Inter', sans-serif; background:#f7f7f7; color:#333; }
+  a { text-decoration:none; color:inherit; }
+  h1,h2,h3,h4 { margin:0; }
+  button { cursor:pointer; }
 
-    /* Header */
-    header { background: #1e90ff; color: #fff; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-    header h1 { font-size: 1.5rem; }
-    nav a { color: #fff; margin-left: 1rem; text-decoration: none; font-weight: bold; }
+  /* Header */
+  header { background:#1e90ff; color:#fff; display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; position:sticky; top:0; z-index:1000; }
+  header .logo { font-size:1.8rem; font-weight:700; }
+  nav a { margin-left:1.5rem; font-weight:600; color:#fff; transition:0.3s; }
+  nav a:hover { color:#ffd700; }
 
-    /* Products */
-    #products { display: flex; flex-wrap: wrap; gap: 1rem; padding: 2rem; justify-content: center; }
-    .product-card { background: #fff; border-radius: 8px; padding: 1rem; width: 200px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    .product-card img { width: 100%; border-radius: 8px; }
-    .product-card button { margin-top: 0.5rem; padding: 0.5rem 1rem; background: #1e90ff; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
-    .product-card button:hover { background: #0d6efd; }
+  /* Hero */
+  .hero { background:#0d6efd url('https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf') center/cover no-repeat; color:#fff; text-align:center; padding:6rem 2rem; border-radius:0 0 50% 50%/20%; margin-bottom:2rem; }
+  .hero h2 { font-size:2.5rem; margin-bottom:1rem; }
+  .hero p { font-size:1.2rem; margin-bottom:2rem; }
+  .hero button { background:#ffd700; border:none; padding:1rem 2rem; font-weight:600; border-radius:6px; transition:0.3s; }
+  .hero button:hover { background:#e6c200; }
 
-    /* Cart */
-    #cart-section { background: #fff; padding: 1rem 2rem; margin: 2rem auto; max-width: 600px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    #cart-section h2 { margin-bottom: 1rem; }
-    .cart-item { margin-bottom: 0.5rem; }
+  /* Product Grid */
+  #products { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:2rem; padding:2rem; max-width:1200px; margin:0 auto; }
+  .product-card { background:#fff; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1); overflow:hidden; transition:0.3s; display:flex; flex-direction:column; justify-content:space-between; }
+  .product-card:hover { transform:translateY(-5px); box-shadow:0 6px 15px rgba(0,0,0,0.15); }
+  .product-card img { width:100%; height:180px; object-fit:cover; }
+  .product-card .info { padding:1rem; flex-grow:1; display:flex; flex-direction:column; justify-content:space-between; }
+  .product-card h3 { font-size:1.1rem; margin-bottom:0.5rem; font-weight:600; }
+  .product-card p { font-weight:600; margin-bottom:1rem; }
+  .product-card button { background:#1e90ff; color:#fff; border:none; padding:0.6rem 1rem; border-radius:6px; font-weight:600; transition:0.3s; }
+  .product-card button:hover { background:#0d6efd; }
 
-    /* Order Form */
-    #order-form { background: #fff; padding: 1rem 2rem; margin: 2rem auto; max-width: 600px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    #order-form h2 { margin-bottom: 1rem; }
-    #order-form input, #order-form button { display: block; width: 100%; margin-bottom: 1rem; padding: 0.5rem; border-radius: 4px; border: 1px solid #ccc; }
-    #order-form button { background: #1e90ff; color: #fff; font-weight: bold; cursor: pointer; }
-    #order-form button:hover { background: #0d6efd; }
+  /* Cart Sidebar */
+  #cart-drawer { position:fixed; top:0; right:-400px; width:350px; height:100%; background:#fff; box-shadow:-4px 0 20px rgba(0,0,0,0.1); transition:0.3s; padding:2rem; z-index:1001; display:flex; flex-direction:column; }
+  #cart-drawer.open { right:0; }
+  #cart-drawer h2 { margin-bottom:1rem; }
+  .cart-item { display:flex; justify-content:space-between; margin-bottom:1rem; font-weight:500; }
+  .cart-item span { font-weight:400; }
+  #cart-total { margin-top:auto; font-weight:700; font-size:1.1rem; }
+  #close-cart { align-self:flex-end; background:none; border:none; font-size:1.5rem; cursor:pointer; }
 
-    /* Footer */
-    footer { text-align: center; padding: 1rem; background: #333; color: #fff; margin-top: 2rem; }
-  </style>
+  /* Order Form Modal */
+  #order-modal { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:none; justify-content:center; align-items:center; z-index:1002; }
+  #order-modal.open { display:flex; }
+  #order-form { background:#fff; padding:2rem; border-radius:12px; width:90%; max-width:500px; display:flex; flex-direction:column; }
+  #order-form input, #order-form button { margin-bottom:1rem; padding:0.7rem; border-radius:6px; border:1px solid #ccc; font-size:1rem; }
+  #order-form button { background:#1e90ff; color:#fff; border:none; font-weight:600; transition:0.3s; }
+  #order-form button:hover { background:#0d6efd; }
+  #close-order { align-self:flex-end; background:none; border:none; font-size:1.5rem; cursor:pointer; margin-bottom:1rem; }
+
+  /* Footer */
+  footer { text-align:center; padding:2rem; background:#333; color:#fff; margin-top:2rem; }
+</style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header>
-    <h1>Ahya Store</h1>
-    <nav>
-      <a href="#products">Products</a>
-      <a href="#cart-section">Cart</a>
-      <a href="#order-form">Order</a>
-    </nav>
-  </header>
+<!-- Header -->
+<header>
+  <div class="logo">Ahya Store</div>
+  <nav>
+    <a href="#products">Products</a>
+    <a href="#" id="cart-toggle">Cart 🛒 (<span id="cart-count">0</span>)</a>
+  </nav>
+</header>
 
-  <!-- Products Section -->
-  <section id="products">
-    <div class="product-card" data-id="1" data-name="Whole Chicken 1kg" data-price="200">
-      <img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf" alt="Whole Chicken">
+<!-- Hero -->
+<section class="hero">
+  <h2>Fresh & Organic Products Delivered</h2>
+  <p>Order online and enjoy the best farm-fresh goods.</p>
+  <button onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop Now</button>
+</section>
+
+<!-- Products Grid -->
+<section id="products">
+  <div class="product-card" data-id="1" data-name="Whole Chicken 1kg" data-price="200">
+    <img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf" alt="Whole Chicken">
+    <div class="info">
       <h3>Whole Chicken 1kg</h3>
       <p>৳200</p>
       <button onclick="addToCart(this)">Add to Cart</button>
     </div>
-    <div class="product-card" data-id="2" data-name="Cucumber 500g" data-price="50">
-      <img src="https://images.unsplash.com/photo-1567306226416-28f0efdc88ce" alt="Cucumber">
+  </div>
+  <div class="product-card" data-id="2" data-name="Cucumber 500g" data-price="50">
+    <img src="https://images.unsplash.com/photo-1567306226416-28f0efdc88ce" alt="Cucumber">
+    <div class="info">
       <h3>Cucumber 500g</h3>
       <p>৳50</p>
       <button onclick="addToCart(this)">Add to Cart</button>
     </div>
-    <div class="product-card" data-id="3" data-name="Tomato 1kg" data-price="80">
-      <img src="https://images.unsplash.com/photo-1582515073490-39981303a0e6" alt="Tomato">
+  </div>
+  <div class="product-card" data-id="3" data-name="Tomato 1kg" data-price="80">
+    <img src="https://images.unsplash.com/photo-1582515073490-39981303a0e6" alt="Tomato">
+    <div class="info">
       <h3>Tomato 1kg</h3>
       <p>৳80</p>
       <button onclick="addToCart(this)">Add to Cart</button>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Cart Section -->
-  <section id="cart-section">
-    <h2>Your Cart</h2>
-    <div id="cart-items"></div>
-    <p id="cart-total"></p>
-  </section>
+<!-- Cart Sidebar -->
+<div id="cart-drawer">
+  <button id="close-cart">&times;</button>
+  <h2>Your Cart</h2>
+  <div id="cart-items"></div>
+  <div id="cart-total"></div>
+  <button onclick="openOrderModal()" style="margin-top:1rem;">Checkout</button>
+</div>
 
-  <!-- Order Form -->
-  <section id="order-form-section">
-    <form id="order-form">
-      <h2>Place Your Order</h2>
-      <input type="text" id="name" placeholder="Full Name" required />
-      <input type="text" id="phone" placeholder="Phone" required />
-      <input type="email" id="email" placeholder="Email" required />
-      <input type="text" id="address" placeholder="Address" required />
-      <input type="text" id="transactionId" placeholder="bKash Transaction ID" required />
-      <button type="submit">Place Order</button>
-    </form>
-  </section>
+<!-- Order Modal -->
+<div id="order-modal">
+  <form id="order-form">
+    <button id="close-order">&times;</button>
+    <h2>Place Your Order</h2>
+    <input type="text" id="name" placeholder="Full Name" required />
+    <input type="text" id="phone" placeholder="Phone" required />
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="text" id="address" placeholder="Address" required />
+    <input type="text" id="transactionId" placeholder="bKash Transaction ID" required />
+    <button type="submit">Place Order</button>
+  </form>
+</div>
 
-  <!-- Footer -->
-  <footer>
-    &copy; 2026 Ahya Store. All Rights Reserved.
-  </footer>
+<!-- Footer -->
+<footer>
+  &copy; 2026 Ahya Store. All Rights Reserved.
+</footer>
 
-  <!-- JS -->
-  <script>
-    // Add to Cart
-    function addToCart(button) {
-      const card = button.closest('.product-card');
-      const id = card.dataset.id;
-      const name = card.dataset.name;
-      const price = parseFloat(card.dataset.price);
+<script>
+  // CART FUNCTIONS
+  function getCartItems() { return JSON.parse(localStorage.getItem('cart') || '[]'); }
+  function saveCartItems(items) { localStorage.setItem('cart', JSON.stringify(items)); }
+  function calculateTotal(items) { return items.reduce((sum,item)=>sum+item.price*item.quantity,0); }
 
-      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  function displayCart() {
+    const items = getCartItems();
+    const container = document.getElementById('cart-items');
+    const totalEl = document.getElementById('cart-total');
+    const countEl = document.getElementById('cart-count');
+    container.innerHTML = '';
+    if(items.length===0){ container.innerHTML='<p>Your cart is empty</p>'; totalEl.textContent=''; countEl.textContent='0'; return; }
+    items.forEach(item=>{
+      const div = document.createElement('div');
+      div.classList.add('cart-item');
+      div.innerHTML=`${item.name} x ${item.quantity} <span>৳${(item.price*item.quantity).toFixed(2)}</span>`;
+      container.appendChild(div);
+    });
+    totalEl.textContent=`Total: ৳${calculateTotal(items).toFixed(2)}`;
+    countEl.textContent=items.reduce((sum,i)=>sum+i.quantity,0);
+  }
 
-      // Check if item exists
-      const existing = cart.find(item => item.id === id);
-      if (existing) {
-        existing.quantity += 1;
-      } else {
-        cart.push({ id, name, price, quantity: 1 });
-      }
-
-      localStorage.setItem('cart', JSON.stringify(cart));
-      displayCart();
-    }
-
-    // Get cart items
-    function getCartItems() {
-      return JSON.parse(localStorage.getItem('cart') || '[]');
-    }
-
-    // Calculate total
-    function calculateTotal(items) {
-      return items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    }
-
-    // Display cart
-    function displayCart() {
-      const cartItems = getCartItems();
-      const cartContainer = document.getElementById('cart-items');
-      const totalContainer = document.getElementById('cart-total');
-      cartContainer.innerHTML = '';
-
-      if (cartItems.length === 0) {
-        cartContainer.innerHTML = '<p>Your cart is empty</p>';
-        totalContainer.textContent = '';
-        return;
-      }
-
-      cartItems.forEach(item => {
-        const div = document.createElement('div');
-        div.classList.add('cart-item');
-        div.textContent = `${item.name} x ${item.quantity} = ৳${(item.price * item.quantity).toFixed(2)}`;
-        cartContainer.appendChild(div);
-      });
-
-      totalContainer.textContent = `Total: ৳${calculateTotal(cartItems).toFixed(2)}`;
-    }
-
-    // Submit order
-    async function submitOrder(event) {
-      event.preventDefault();
-      const name = document.getElementById('name').value.trim();
-      const phone = document.getElementById('phone').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const address = document.getElementById('address').value.trim();
-      const transactionId = document.getElementById('transactionId').value.trim();
-      const items = getCartItems();
-
-      if (!name || !phone || !email || !address || !transactionId || items.length === 0) {
-        alert('Please fill all fields and ensure your cart is not empty.');
-        return;
-      }
-
-      const total = calculateTotal(items);
-
-      try {
-        const res = await fetch('https://e-com-nine-rho.vercel.app/api/sub', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, phone, email, address, transactionId, total, items })
-        });
-
-        const data = await res.json();
-        if (res.ok) {
-          alert(`Order placed successfully! Transaction ID: ${data.transactionId}`);
-          localStorage.removeItem('cart');
-          displayCart();
-          document.getElementById('order-form').reset();
-        } else {
-          alert(`Error: ${data.error}`);
-        }
-      } catch (err) {
-        console.error(err);
-        alert('Failed to submit order.');
-      }
-    }
-
-    document.getElementById('order-form').addEventListener('submit', submitOrder);
+  function addToCart(btn){
+    const card=btn.closest('.product-card');
+    const id=card.dataset.id;
+    const name=card.dataset.name;
+    const price=parseFloat(card.dataset.price);
+    let cart=getCartItems();
+    const existing=cart.find(i=>i.id===id);
+    if(existing){ existing.quantity+=1; } else { cart.push({id,name,price,quantity:1}); }
+    saveCartItems(cart);
     displayCart();
-  </script>
+  }
+
+  // Cart drawer toggle
+  const cartDrawer = document.getElementById('cart-drawer');
+  document.getElementById('cart-toggle').onclick = () => cartDrawer.classList.add('open');
+  document.getElementById('close-cart').onclick = () => cartDrawer.classList.remove('open');
+
+  // Order Modal
+  const orderModal = document.getElementById('order-modal');
+  function openOrderModal(){ orderModal.classList.add('open'); }
+  document.getElementById('close-order').onclick = () => orderModal.classList.remove('open');
+
+  // Submit order
+  document.getElementById('order-form').addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const name=document.getElementById('name').value.trim();
+    const phone=document.getElementById('phone').value.trim();
+    const email=document.getElementById('email').value.trim();
+    const address=document.getElementById('address').value.trim();
+    const transactionId=document.getElementById('transactionId').value.trim();
+    const items=getCartItems();
+    if(!name||!phone||!email||!address||!transactionId||items.length===0){ alert('Fill all fields & cart not empty'); return; }
+    const total=calculateTotal(items);
+    try{
+      const res=await fetch('https://your-vercel-url.vercel.app/api/sub',{
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({name,phone,email,address,transactionId,total,items})
+      });
+      const data=await res.json();
+      if(res.ok){ alert(`Order placed! Transaction ID: ${data.transactionId}`); localStorage.removeItem('cart'); displayCart(); orderModal.classList.remove('open'); document.getElementById('order-form').reset(); }
+      else alert(`Error: ${data.error}`);
+    }catch(err){ console.error(err); alert('Failed to submit order'); }
+  });
+
+  displayCart();
+</script>
 </body>
 </html>
