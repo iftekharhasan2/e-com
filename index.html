@@ -3,146 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AYHA Fashion | Trendy & Sustainable Clothing</title>
-<meta name="description" content="AYHA Fashion – Stylish, comfortable, and ethically-made clothing. Shop our latest collection online.">
-<!-- Tailwind CSS -->
+<title>UrbanStyle Clothing</title>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <script src="https://cdn.tailwindcss.com"></script>
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: {
-        'urbor-green': '#2d6a4f',
-        'urbor-green-dark': '#1b4332',
-        'urbor-green-light': '#40916c',
-        'urbor-cream': '#faf7f2',
-      },
-      fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        display: ['Playfair Display', 'serif'],
-      }
-    }
-  }
-}
-</script>
 <style>
-body { background-color: #faf7f2; color: #1e1b1b; scroll-behavior: smooth; }
-.glass-card-premium {
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(45, 106, 79, 0.15);
-  transition: all 0.3s ease;
-}
-.glass-card-premium:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px -10px rgba(45, 106, 79, 0.15);
-  border-color: rgba(45, 106, 79, 0.3);
-}
-.btn-premium {
-  background: linear-gradient(145deg, #2d6a4f, #1b4332);
-  color: white; font-weight: 500; transition: all 0.3s ease; border: none;
-}
-.btn-premium:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 28px -8px #2d6a4f99;
-}
-.qty-control { display: flex; align-items: center; gap: 0; background: #f0eae4; border-radius: 10px; overflow: hidden; border: 1px solid rgba(45,106,79,0.15); }
-.qty-btn { width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:transparent;border:none;color:#2d6a4f;font-size:14px;cursor:pointer; }
-.qty-btn:hover { background: rgba(45,106,79,0.1); }
-.qty-btn:disabled { opacity:0.4; cursor:not-allowed; }
-.qty-value { min-width:36px;text-align:center;font-weight:600;font-size:14px; }
-.cart-scroll::-webkit-scrollbar { width:4px; }
-.cart-scroll::-webkit-scrollbar-thumb { background:#2d6a4f; border-radius:4px; }
-input:focus, textarea:focus { outline:none; box-shadow:0 0 0 3px rgba(45,106,79,0.15); }
-.faq-btn i { transition: transform 0.3s ease; }
+  .btn-premium {
+    background: #1a202c; color: white; transition: all 0.3s;
+  }
+  .btn-premium:hover { background: #4a5568; }
 </style>
 </head>
-<body class="antialiased">
-
-<!-- NAVIGATION -->
-<nav class="fixed w-full z-50 glass-card-premium border-b border-white/30">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-  <div class="flex justify-between h-16 items-center">
-    <!-- Logo -->
-    <div class="flex items-center gap-3">
-      <span class="text-3xl font-display font-semibold text-gray-900">AYHA Fashion</span>
-    </div>
-    <!-- Desktop Menu -->
-    <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
-      <a href="#products" class="text-gray-800 hover:text-urbor-green">Products</a>
-      <a href="#why-us" class="text-gray-800 hover:text-urbor-green">Why Us</a>
-      <a href="#testimonials" class="text-gray-800 hover:text-urbor-green">Testimonials</a>
-      <a href="#faq" class="text-gray-800 hover:text-urbor-green">FAQ</a>
-    </div>
-    <!-- Right: Cart & Mobile Menu -->
-    <div class="flex items-center space-x-4">
-      <button onclick="openCartSidebar()" class="relative flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 px-4 py-2 rounded-lg transition shadow-sm">
-        <i class="fas fa-shopping-cart text-lg text-urbor-green"></i>
-        <span class="hidden sm:inline text-sm font-bold">Cart</span>
-        <span id="cart-count" class="flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-urbor-green rounded-full">0</span>
-      </button>
-      <button id="mobile-menu-btn" class="md:hidden text-xl text-gray-800"><i class="fas fa-bars"></i></button>
-    </div>
-  </div>
-</div>
-<!-- Mobile Menu -->
-<div id="mobile-menu" class="hidden md:hidden bg-white border-t px-4 py-3 space-y-2">
-  <a href="#products" class="block py-2 text-gray-800">Products</a>
-  <a href="#why-us" class="block py-2 text-gray-800">Why Us</a>
-  <a href="#testimonials" class="block py-2 text-gray-800">Testimonials</a>
-  <a href="#faq" class="block py-2 text-gray-800">FAQ</a>
-</div>
-</nav>
-
-<!-- CART SIDEBAR -->
-<div id="cart-overlay" onclick="closeCartSidebar()" class="fixed inset-0 bg-black/40 z-[60] hidden"></div>
-<div id="cart-sidebar" class="fixed top-0 left-0 h-full w-full max-w-md bg-white z-[70] shadow-xl transform -translate-x-full transition-transform duration-200 flex flex-col">
-  <div class="px-5 py-4 border-b flex justify-between items-center bg-urbor-cream">
-    <h2 class="text-lg font-bold text-gray-900 flex items-center gap-2"><i class="fas fa-shopping-cart text-urbor-green"></i> Your Cart</h2>
-    <button onclick="closeCartSidebar()" class="text-gray-400 hover:text-red-500 p-1"><i class="fas fa-times text-xl"></i></button>
-  </div>
-  <div class="flex-1 overflow-y-auto p-5 cart-scroll bg-[#faf7f2]">
-    <div id="sidebar-cart-items" class="space-y-3"></div>
-    <div id="sidebar-empty" class="hidden text-center py-8">
-      <i class="fas fa-shopping-cart text-3xl text-gray-300 mb-2"></i>
-      <p class="text-gray-500 text-sm">Your cart is empty</p>
-    </div>
-  </div>
-  <div class="p-5 border-t bg-white">
-    <div class="flex justify-between items-center mb-4">
-      <span class="text-gray-600 text-sm">Subtotal</span>
-      <span id="sidebar-total" class="text-lg font-bold text-urbor-green">৳0.00</span>
-    </div>
-    <button onclick="proceedToCheckout()" class="w-full btn-premium py-3 rounded-lg text-sm font-medium flex justify-center items-center gap-2">
-      Proceed to Checkout
-      <i class="fas fa-arrow-right"></i>
-    </button>
-    <p class="text-xs text-center text-gray-400 mt-3">
-      <i class="fas fa-truck text-urbor-green mr-1"></i> Free delivery nationwide
-    </p>
-  </div>
-</div>
+<body class="bg-gray-50 font-sans">
 
 <!-- HERO SECTION -->
-<section class="relative hero-section pt-12 h-[50vh] md:h-[60vh] lg:h-[65vh]">
-  <img 
-    src="https://images.unsplash.com/photo-1616595327722-7b7d7ecb3f68?auto=format&fit=crop&w=1200&q=80"
-    alt="Trendy Clothing Collection"
-    class="w-full h-full object-cover"
-  >
-  <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent flex items-center lg:items-end">
-    <div class="max-w-7xl mx-auto px-4 w-full py-8 lg:py-16">
+<section class="relative hero-section h-[450px]">
+  <img src="https://images.unsplash.com/photo-1593032465172-c1c6362b40d3?auto=format&fit=crop&w=1200&q=80"
+  alt="UrbanStyle clothing"
+  class="w-full h-full object-cover">
+  <div class="absolute inset-0 bg-black/40 flex items-end">
+    <div class="max-w-7xl mx-auto px-4 pb-10 w-full">
       <div class="max-w-3xl">
-        <h1 class="text-2xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-3 leading-tight">
-          Trendy & Sustainable Fashion
-        </h1>
-        <p class="text-white/90 text-sm md:text-lg lg:text-xl mb-5">
-          Stylish clothing • Comfortable fit • Ethically made
-        </p>
-        <a href="#products" class="inline-flex items-center gap-2 bg-urbor-green hover:bg-urbor-green-dark text-white px-6 md:px-8 py-3 md:py-4 rounded-lg text-sm md:text-base font-medium transition">
+        <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2">UrbanStyle Clothing</h1>
+        <p class="text-white/90 text-lg md:text-xl mb-4">Trendy • Premium Quality • Delivered to Your Door</p>
+        <a href="#products" class="inline-flex items-center gap-2 btn-premium px-6 py-3 rounded-lg text-base font-medium">
           Shop Now
           <i class="fas fa-arrow-down"></i>
         </a>
@@ -152,118 +35,243 @@ input:focus, textarea:focus { outline:none; box-shadow:0 0 0 3px rgba(45,106,79,
 </section>
 
 <!-- PRODUCTS SECTION -->
-<section id="products" class="py-20 bg-[#faf7f2]">
-<div class="max-w-7xl mx-auto px-4">
-  <div class="text-center max-w-2xl mx-auto mb-12">
-    <span class="text-urbor-green uppercase tracking-wider text-xs font-semibold">NEW ARRIVALS</span>
-    <h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900 mt-2 mb-3">Our Collection</h2>
-    <p class="text-gray-600">Explore stylish outfits, shoes, bags, and accessories for every occasion.</p>
+<section id="products" class="py-12 max-w-7xl mx-auto px-4">
+  <h2 class="text-3xl font-bold mb-6 text-center">Our Collection</h2>
+  <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <!-- JS will render product cards here -->
   </div>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="product-container"></div>
-</div>
 </section>
 
-<!-- FAQ -->
-<section id="faq" class="py-20 bg-white">
-<div class="max-w-3xl mx-auto px-4">
-  <div class="text-center mb-8">
-    <span class="text-urbor-green uppercase tracking-wider text-xs font-semibold">Help Center</span>
-    <h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900 mt-2">Frequently Asked Questions</h2>
+<!-- CART SIDEBAR -->
+<div id="cart-sidebar" class="fixed right-0 top-0 h-full w-96 bg-white shadow-lg z-50 transform translate-x-full transition-transform duration-300">
+  <div class="p-6 flex justify-between items-center border-b">
+    <h3 class="text-xl font-bold">Your Cart</h3>
+    <button onclick="toggleCart()" class="text-gray-500 hover:text-red-500"><i class="fas fa-times"></i></button>
   </div>
-  <div class="space-y-3">
-    <div class="glass-card-premium rounded-xl overflow-hidden">
-      <button class="faq-btn w-full flex justify-between items-center p-4 text-left font-medium text-gray-900 text-sm">
-        <span>What sizes are available?</span>
-        <i class="fas fa-chevron-down text-urbor-green"></i>
+  <div id="cart-items" class="p-6 flex-1 overflow-y-auto"></div>
+  <div class="p-6 border-t">
+    <p class="mb-4 text-lg">Subtotal: <span id="cart-subtotal" class="font-bold">৳0.00</span></p>
+    <button onclick="proceedToCheckout()" class="w-full btn-premium py-3 rounded-lg flex justify-center items-center gap-2">
+      Checkout
+      <i class="fas fa-credit-card"></i>
+    </button>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div id="checkout-modal" class="fixed inset-0 bg-black/50 z-[80] hidden items-center justify-center px-4">
+  <div class="bg-white rounded-2xl max-w-md w-full p-6 relative">
+    <button onclick="closeCheckoutModal()" class="absolute top-4 right-4 text-gray-400 hover:text-red-500">
+      <i class="fas fa-times text-xl"></i>
+    </button>
+    <h2 class="text-2xl font-bold text-gray-900 mb-4">Checkout</h2>
+    <form id="checkout-form" class="space-y-4">
+      <input type="text" name="name" placeholder="Full Name" class="w-full p-3 rounded-lg border border-gray-300" required>
+      <input type="text" name="phone" placeholder="Phone Number" class="w-full p-3 rounded-lg border border-gray-300" required>
+      <input type="email" name="email" placeholder="Email" class="w-full p-3 rounded-lg border border-gray-300" required>
+      <textarea name="address" placeholder="Shipping Address" class="w-full p-3 rounded-lg border border-gray-300" required></textarea>
+      <input type="text" name="transactionId" placeholder="bKash Transaction ID" class="w-full p-3 rounded-lg border border-gray-300" required>
+      <div class="text-gray-700 text-sm mb-2">
+        <strong>Order Summary:</strong>
+        <ul id="checkout-summary" class="list-disc pl-5 mt-1 text-gray-600"></ul>
+        <p class="mt-2">Subtotal: <span id="checkout-total" class="font-bold">৳0.00</span></p>
+      </div>
+      <button type="submit" class="w-full btn-premium py-3 rounded-lg text-sm font-medium flex justify-center items-center gap-2">
+        Place Order
+        <i class="fas fa-paper-plane"></i>
       </button>
-      <div class="faq-content hidden px-4 pb-4 text-gray-600 text-sm">
-        Sizes XS to XXL are available for men and women. Size charts are provided for reference.
-      </div>
-    </div>
-    <div class="glass-card-premium rounded-xl overflow-hidden">
-      <button class="faq-btn w-full flex justify-between items-center p-4 text-left font-medium text-gray-900 text-sm">
-        <span>Can I return or exchange an item?</span>
-        <i class="fas fa-chevron-down text-urbor-green"></i>
-      </button>
-      <div class="faq-content hidden px-4 pb-4 text-gray-600 text-sm">
-        Yes! Returns and exchanges are accepted within 7 days if items are unused and in original packaging.
-      </div>
-    </div>
+    </form>
+    <div id="checkout-message" class="mt-4 text-sm"></div>
   </div>
 </div>
-</section>
 
-<!-- TESTIMONIALS -->
-<section id="testimonials" class="py-20 bg-[#faf7f2]">
-<div class="max-w-7xl mx-auto px-4">
-  <div class="text-center max-w-2xl mx-auto mb-12">
-    <span class="text-urbor-green uppercase tracking-wider text-xs font-semibold">Loved by Our Customers</span>
-    <h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900 mt-2 mb-3">Testimonials</h2>
-  </div>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    <div class="glass-card-premium rounded-2xl p-6">
-      <p class="text-gray-700 text-sm mb-4 italic">"Amazing quality and fit! I will definitely shop again."</p>
-      <div class="flex items-center">
-        <span class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-urbor-green font-bold text-sm mr-3">SR</span>
-        <div><h4 class="font-bold text-gray-900 text-sm">Sadia Rahman</h4><p class="text-gray-500 text-xs">Dhaka, Bangladesh</p></div>
-      </div>
+<!-- FAQ SECTION -->
+<section id="faq" class="py-12 bg-gray-100">
+  <div class="max-w-5xl mx-auto px-4">
+    <h2 class="text-3xl font-bold mb-6 text-center">Frequently Asked Questions</h2>
+    <div class="space-y-4">
+      <details class="p-4 border rounded-lg">
+        <summary class="font-semibold cursor-pointer">What sizes do you offer?</summary>
+        <p class="mt-2 text-gray-600">We offer XS to XXL for all our clothing items.</p>
+      </details>
+      <details class="p-4 border rounded-lg">
+        <summary class="font-semibold cursor-pointer">Do you offer returns?</summary>
+        <p class="mt-2 text-gray-600">Yes! We have a 7-day return policy for unused items.</p>
+      </details>
+      <details class="p-4 border rounded-lg">
+        <summary class="font-semibold cursor-pointer">How long is shipping?</summary>
+        <p class="mt-2 text-gray-600">Delivery usually takes 3–5 business days.</p>
+      </details>
     </div>
   </div>
-</div>
 </section>
 
-<!-- Checkout modal, footer, and scripts go here -->
+<!-- TESTIMONIALS SECTION -->
+<section id="testimonials" class="py-12 max-w-7xl mx-auto px-4">
+  <h2 class="text-3xl font-bold mb-6 text-center">What Our Customers Say</h2>
+  <div class="grid md:grid-cols-3 gap-6">
+    <div class="bg-white p-6 rounded-xl shadow">
+      <p class="text-gray-700 mb-4">"Love the quality! My outfits arrived quickly and fit perfectly."</p>
+      <p class="font-bold text-gray-900">— Ayesha R.</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl shadow">
+      <p class="text-gray-700 mb-4">"Excellent service and stylish clothes. Highly recommend UrbanStyle."</p>
+      <p class="font-bold text-gray-900">— Jamal K.</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl shadow">
+      <p class="text-gray-700 mb-4">"The checkout was smooth, and the bKash payment worked perfectly."</p>
+      <p class="font-bold text-gray-900">— Farhana S.</p>
+    </div>
+  </div>
+</section>
 
+<!-- JS: PRODUCTS, CART & CHECKOUT -->
 <script>
-// ======= PRODUCTS & CART LOGIC =======
 const products = [
-  { id:1,name:"Casual Shirt",price:1200,image:"https://images.unsplash.com/photo-1593032465175-481ac7f401a0?auto=format&fit=crop&w=600&q=80",desc:"Comfortable casual shirt for everyday wear." },
-  { id:2,name:"Elegant Dress",price:1800,image:"https://images.unsplash.com/photo-1602810316693-3667c854239a?auto=format&fit=crop&w=600&q=80",desc:"Elegant dress for special occasions." },
-  { id:3,name:"Denim Jacket",price:1500,image:"https://images.unsplash.com/photo-1610652492500-ded49ceeb378?auto=format&fit=crop&w=600&q=80",desc:"Classic denim jacket for a stylish look." }
+  {id:1,name:"Classic White Shirt",price:1299,image:"https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=600&q=80"},
+  {id:2,name:"Denim Jacket",price:2999,image:"https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=600&q=80"},
+  {id:3,name:"Urban Hoodie",price:1899,image:"https://images.unsplash.com/photo-1581567383264-ef2b2127e0e4?auto=format&fit=crop&w=600&q=80"},
+  {id:4,name:"Slim Fit Pants",price:1499,image:"https://images.unsplash.com/photo-1593032465172-c1c6362b40d3?auto=format&fit=crop&w=600&q=80"}
 ];
-let cart = {}, productQuantities = {};
-document.addEventListener('DOMContentLoaded', () => {
-  renderProducts();
-  setupFAQ();
-  setupMobileMenu();
-  updateCartUI();
-});
-function renderProducts() {
-  const container = document.getElementById('product-container');
-  container.innerHTML = products.map(p=>{
-    const qty = productQuantities[p.id]||0;
-    return `
-    <article class="glass-card-premium rounded-2xl overflow-hidden">
-      <img src="${p.image}" alt="${p.name}" class="w-full h-64 object-cover">
-      <div class="p-4 flex flex-col flex-grow">
-        <h3 class="font-bold text-lg mb-1">${p.name}</h3>
-        <p class="text-gray-600 text-sm mb-3 flex-grow">${p.desc}</p>
-        <div class="flex justify-between items-center">
-          <span class="text-urbor-green font-bold">৳${p.price}</span>
-          <div class="qty-control">
-            <button onclick="changeQty(${p.id},-1)" class="qty-btn" ${qty===0?'disabled':''}><i class="fas fa-minus"></i></button>
-            <span class="qty-value">${qty}</span>
-            <button onclick="changeQty(${p.id},1)" class="qty-btn"><i class="fas fa-plus"></i></button>
-          </div>
-        </div>
-      </div>
-    </article>`;
-  }).join('');
-}
-function changeQty(id,delta){ productQuantities[id]=Math.max(0,(productQuantities[id]||0)+delta); renderProducts(); updateCartFromCards(); }
-function updateCartFromCards(){ cart={}; products.forEach(p=>{ const q = productQuantities[p.id]||0; if(q>0) cart[p.id]={...p,quantity:q}; }); updateCartUI(); }
-function updateCartUI(){
-  const items = Object.values(cart);
-  const total = items.reduce((s,i)=>s+i.price*i.quantity,0);
-  const count = items.reduce((s,i)=>s+i.quantity,0);
-  document.getElementById('cart-count').textContent=count;
-  document.getElementById('sidebar-total').textContent='৳'+total.toFixed(2);
-}
-function openCartSidebar(){document.getElementById('cart-sidebar').classList.remove('-translate-x-full');document.getElementById('cart-overlay').classList.remove('hidden');document.body.style.overflow='hidden'; updateCartUI();}
-function closeCartSidebar(){document.getElementById('cart-sidebar').classList.add('-translate-x-full');document.getElementById('cart-overlay').classList.add('hidden');document.body.style.overflow='auto';}
-function setupFAQ(){document.querySelectorAll('.faq-btn').forEach(btn=>btn.addEventListener('click',()=>{ const content=btn.nextElementSibling; const icon=btn.querySelector('i'); content.classList.toggle('hidden'); icon.classList.toggle('rotate-180'); }));}
-function setupMobileMenu(){const btn=document.getElementById('mobile-menu-btn');const menu=document.getElementById('mobile-menu');const icon=btn.querySelector('i');btn.addEventListener('click',()=>{menu.classList.toggle('hidden'); icon.classList.toggle('fa-bars'); icon.classList.toggle('fa-times');});}
-</script>
 
+let cart = {};
+let productQuantities = {};
+
+function renderProducts() {
+  const grid = document.getElementById('products-grid');
+  grid.innerHTML = '';
+  products.forEach(p=>{
+    const card = document.createElement('div');
+    card.className='bg-white p-4 rounded-xl shadow hover:shadow-lg transition cursor-pointer flex flex-col';
+    card.innerHTML=`
+      <img src="${p.image}" class="rounded-lg h-48 object-cover mb-4">
+      <h3 class="font-bold text-lg mb-1">${p.name}</h3>
+      <p class="text-gray-700 mb-2">৳${p.price}</p>
+      <button onclick="addToCart(${p.id})" class="btn-premium py-2 rounded-lg mt-auto flex justify-center items-center gap-2">
+        Add to Cart
+        <i class="fas fa-shopping-cart"></i>
+      </button>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function toggleCart(){
+  const sidebar=document.getElementById('cart-sidebar');
+  sidebar.classList.toggle('translate-x-full');
+}
+
+function addToCart(id){
+  const product = products.find(p=>p.id===id);
+  if(cart[id]){
+    cart[id].quantity+=1;
+  }else{
+    cart[id]={...product,quantity:1};
+  }
+  updateCartUI();
+  toggleCart();
+}
+
+function removeFromCart(id){
+  delete cart[id];
+  updateCartUI();
+}
+
+function updateCartUI(){
+  const cartItems=document.getElementById('cart-items');
+  cartItems.innerHTML='';
+  let subtotal=0;
+  Object.values(cart).forEach(item=>{
+    subtotal+=item.price*item.quantity;
+    const div=document.createElement('div');
+    div.className='flex justify-between items-center mb-4';
+    div.innerHTML=`
+      <div>
+        <h4 class="font-semibold">${item.name}</h4>
+        <p class="text-gray-600">৳${item.price} x ${item.quantity} = ৳${(item.price*item.quantity).toFixed(2)}</p>
+      </div>
+      <div class="flex flex-col gap-1">
+        <button onclick="addToCart(${item.id})" class="text-green-500"><i class="fas fa-plus"></i></button>
+        <button onclick="decreaseQty(${item.id})" class="text-red-500"><i class="fas fa-minus"></i></button>
+      </div>
+      <button onclick="removeFromCart(${item.id})" class="ml-2 text-gray-400 hover:text-red-500"><i class="fas fa-trash"></i></button>
+    `;
+    cartItems.appendChild(div);
+  });
+  document.getElementById('cart-subtotal').textContent='৳'+subtotal.toFixed(2);
+}
+
+function decreaseQty(id){
+  if(cart[id].quantity>1){
+    cart[id].quantity-=1;
+  } else{
+    removeFromCart(id);
+  }
+  updateCartUI();
+}
+
+// CHECKOUT
+function proceedToCheckout() {
+  if(Object.keys(cart).length===0){ alert('Cart is empty'); return; }
+  const summaryEl=document.getElementById('checkout-summary');
+  summaryEl.innerHTML='';
+  Object.values(cart).forEach(item=>{
+    const li=document.createElement('li');
+    li.textContent=`${item.name} x ${item.quantity} - ৳${(item.price*item.quantity).toFixed(2)}`;
+    summaryEl.appendChild(li);
+  });
+  const totalEl=document.getElementById('checkout-total');
+  const total=Object.values(cart).reduce((sum,i)=>sum+i.price*i.quantity,0);
+  totalEl.textContent='৳'+total.toFixed(2);
+  document.getElementById('checkout-modal').classList.remove('hidden');
+  document.body.style.overflow='hidden';
+}
+
+function closeCheckoutModal(){
+  document.getElementById('checkout-modal').classList.add('hidden');
+  document.body.style.overflow='auto';
+}
+
+document.getElementById('checkout-form').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const form=this;
+  const formData={
+    name:form.name.value,
+    phone:form.phone.value,
+    email:form.email.value,
+    address:form.address.value,
+    transactionId:form.transactionId.value,
+    total:Object.values(cart).reduce((sum,i)=>sum+i.price*i.quantity,0),
+    items:Object.values(cart)
+  };
+  const messageEl=document.getElementById('checkout-message');
+  messageEl.textContent='Processing order...';
+  try{
+    const res=await fetch('/api/sub',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(formData)
+    });
+    const data=await res.json();
+    if(res.ok){
+      messageEl.classList.add('text-green-600');
+      messageEl.textContent=`✅ Order placed successfully! Transaction ID: ${data.transactionId}`;
+      cart={};
+      productQuantities={};
+      updateCartUI();
+      renderProducts();
+    }else{
+      messageEl.classList.add('text-red-600');
+      messageEl.textContent=`❌ ${data.error||'Failed to place order'}`;
+    }
+  }catch(err){
+    console.error(err);
+    messageEl.classList.add('text-red-600');
+    messageEl.textContent='❌ Network or server error.';
+  }
+});
+
+renderProducts();
+</script>
 </body>
 </html>
