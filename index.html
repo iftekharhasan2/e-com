@@ -1,48 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AYHA | Premium Fashion</title>
+<title>AYHA Fashion Store</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-
 <style>
 
 body{
-font-family:Inter,sans-serif;
 background:#faf7f2;
 }
-
-/* Announcement bar */
-
-.announce{
-background:#1b4332;
-color:white;
-font-size:12px;
-letter-spacing:.05em;
-}
-
-/* Hero */
-
-.hero{
-height:90vh;
-position:relative;
-}
-
-.hero-overlay{
-background:linear-gradient(to top,rgba(0,0,0,.75),transparent);
-}
-
-/* Product Card */
 
 .product-card{
 transition:.35s;
@@ -50,7 +24,7 @@ transition:.35s;
 
 .product-card:hover{
 transform:translateY(-6px);
-box-shadow:0 25px 40px rgba(0,0,0,.12);
+box-shadow:0 20px 40px rgba(0,0,0,.12);
 }
 
 .product-card img{
@@ -58,45 +32,7 @@ transition:.4s;
 }
 
 .product-card:hover img{
-transform:scale(1.06);
-}
-
-/* Badge */
-
-.badge{
-position:absolute;
-top:12px;
-left:12px;
-background:#2d6a4f;
-color:white;
-font-size:11px;
-padding:4px 8px;
-border-radius:6px;
-}
-
-/* Button */
-
-.btn{
-background:#2d6a4f;
-color:white;
-transition:.3s;
-}
-
-.btn:hover{
-background:#1b4332;
-}
-
-/* testimonial slider */
-
-.slider{
-animation:slide 18s infinite;
-}
-
-@keyframes slide{
-0%{transform:translateX(0)}
-33%{transform:translateX(-100%)}
-66%{transform:translateX(-200%)}
-100%{transform:translateX(0)}
+transform:scale(1.05);
 }
 
 </style>
@@ -105,111 +41,44 @@ animation:slide 18s infinite;
 
 <body>
 
-<!-- Announcement -->
+<!-- NAVBAR -->
 
-<div class="announce text-center py-2">
-🚚 Free Delivery in Dhaka • Secure bKash Payment • 7 Day Easy Returns
-</div>
+<nav class="bg-white shadow sticky top-0 z-40">
 
-<!-- Navbar -->
-
-<nav class="bg-white shadow-sm sticky top-0 z-50">
-
-<div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
 <h1 class="text-2xl font-bold">
 AYHA <span class="text-green-700">آيَة</span>
 </h1>
 
-<div class="space-x-6 hidden md:flex text-sm">
+<button onclick="openCart()" class="relative text-xl">
 
-<a href="#products">Products</a>
-<a href="#why">Why Us</a>
-<a href="#testimonials">Reviews</a>
-
-</div>
-
-<button onclick="openCart()" class="text-xl">
 <i class="fas fa-shopping-cart"></i>
-<span id="cart-count">0</span>
+
+<span id="cart-count"
+class="absolute -top-2 -right-3 bg-green-700 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+0
+</span>
+
 </button>
 
 </div>
 
 </nav>
 
-<!-- Hero -->
 
-<section class="hero">
+<!-- PRODUCTS -->
 
-<img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf"
-class="absolute w-full h-full object-cover">
-
-<div class="hero-overlay absolute inset-0 flex items-end">
-
-<div class="max-w-6xl mx-auto px-6 pb-20 text-white">
-
-<h1 class="text-5xl font-bold mb-4">
-Premium Fashion Collection
-</h1>
-
-<p class="text-lg mb-6">
-Trendy outfits designed for modern lifestyle
-</p>
-
-<a href="#products"
-class="btn px-8 py-3 rounded-lg">
-Shop Now
-</a>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- Trust badges -->
-
-<section class="bg-white py-8 border-b">
-
-<div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 text-center gap-6 text-sm">
-
-<div>
-<i class="fas fa-truck text-green-700 text-xl mb-2"></i>
-<p>Fast Delivery</p>
-</div>
-
-<div>
-<i class="fas fa-shield-alt text-green-700 text-xl mb-2"></i>
-<p>Secure Payment</p>
-</div>
-
-<div>
-<i class="fas fa-star text-green-700 text-xl mb-2"></i>
-<p>Top Rated</p>
-</div>
-
-<div>
-<i class="fas fa-undo text-green-700 text-xl mb-2"></i>
-<p>Easy Returns</p>
-</div>
-
-</div>
-
-</section>
-
-<!-- Products -->
-
-<section id="products" class="py-20">
+<section class="py-16">
 
 <div class="max-w-7xl mx-auto px-6">
 
-<h2 class="text-4xl font-bold text-center mb-14">
-Featured Collection
+<h2 class="text-4xl font-bold text-center mb-12">
+Our Collection
 </h2>
 
-<div id="products-grid"
-class="grid md:grid-cols-3 gap-10">
+<div id="product-grid"
+class="grid md:grid-cols-3 gap-8">
 
 </div>
 
@@ -217,114 +86,148 @@ class="grid md:grid-cols-3 gap-10">
 
 </section>
 
-<!-- Testimonials -->
 
-<section id="testimonials" class="bg-white py-20 overflow-hidden">
+<!-- CART OVERLAY -->
 
-<h2 class="text-center text-4xl font-bold mb-10">
-Customer Reviews
-</h2>
+<div id="cart-overlay"
+class="fixed inset-0 bg-black/40 hidden z-40"
+onclick="closeCart()"></div>
 
-<div class="max-w-5xl mx-auto overflow-hidden">
 
-<div class="flex slider">
+<!-- CART DRAWER -->
 
-<div class="min-w-full text-center px-10">
-<p class="italic mb-4">
-"Great quality clothing and very fast delivery!"
-</p>
-<b>Ahmed Khan</b>
-</div>
+<div id="cart-drawer"
+class="fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-xl
+transform translate-x-full transition duration-300 z-50 flex flex-col">
 
-<div class="min-w-full text-center px-10">
-<p class="italic mb-4">
-"Stylish products and amazing service."
-</p>
-<b>Nusrat Tasnim</b>
-</div>
+<div class="flex justify-between items-center p-4 border-b">
 
-<div class="min-w-full text-center px-10">
-<p class="italic mb-4">
-"One of the best fashion stores online."
-</p>
-<b>Sadia Rahman</b>
-</div>
+<h3 class="font-bold text-lg">
+<i class="fas fa-shopping-cart mr-2"></i>
+Your Cart
+</h3>
+
+<button onclick="closeCart()">
+<i class="fas fa-times text-xl"></i>
+</button>
 
 </div>
 
+<div id="cart-items"
+class="flex-1 overflow-y-auto p-4 space-y-3"></div>
+
+<div class="p-4 border-t">
+
+<div class="flex justify-between mb-3 font-semibold">
+<span>Subtotal</span>
+<span id="cart-subtotal">৳0</span>
 </div>
 
-</section>
+<button onclick="openCheckout()"
+class="bg-green-700 text-white w-full py-3 rounded-lg">
+Checkout
+</button>
 
-<!-- Footer -->
-
-<footer class="bg-black text-gray-400 py-12">
-
-<div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-8 px-6">
-
-<div>
-<h3 class="text-white text-lg mb-3">AYHA</h3>
-<p>Modern fashion & lifestyle brand.</p>
-</div>
-
-<div>
-<h3 class="text-white mb-3">Links</h3>
-<p>Products</p>
-<p>FAQ</p>
-<p>Contact</p>
-</div>
-
-<div>
-<h3 class="text-white mb-3">Contact</h3>
-<p>Satkania, Chattogram</p>
-<p>+8801742646973</p>
 </div>
 
 </div>
 
-<div class="text-center mt-10 text-sm">
-© 2026 AYHA
+
+<!-- CHECKOUT MODAL -->
+
+<div id="checkout-modal"
+class="fixed inset-0 bg-black/60 hidden z-50 flex items-center justify-center">
+
+<div class="bg-white w-full max-w-md rounded-xl p-6">
+
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-bold text-lg">Checkout</h3>
+<button onclick="closeCheckout()">
+<i class="fas fa-times"></i>
+</button>
 </div>
 
-</footer>
+<div class="bg-green-50 border rounded-lg p-3 mb-4 text-sm">
+
+<p class="font-semibold text-green-700 mb-2">bKash Payment</p>
+
+<ol class="list-decimal list-inside text-xs space-y-1">
+
+<li>Open bKash → Send Money</li>
+<li>Send <b id="bkash-total">0</b> BDT</li>
+<li>Copy Transaction ID</li>
+<li>Paste below</li>
+
+</ol>
+
+</div>
+
+<form onsubmit="placeOrder(event)" class="space-y-3">
+
+<input required placeholder="Name"
+class="w-full border p-2 rounded">
+
+<input required placeholder="Phone"
+class="w-full border p-2 rounded">
+
+<textarea required placeholder="Address"
+class="w-full border p-2 rounded"></textarea>
+
+<input required placeholder="bKash Transaction ID"
+class="w-full border p-2 rounded">
+
+<button
+class="bg-green-700 text-white w-full py-3 rounded-lg">
+Confirm Order
+</button>
+
+</form>
+
+</div>
+
+</div>
+
 
 <script>
 
+
+/* PRODUCTS */
+
 const products=[
+
 {
 id:1,
-name:"Men Premium Panjabi",
+name:"Premium Panjabi",
 price:2200,
-image:"https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf",
-badge:"NEW"
+image:"https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf"
 },
+
 {
 id:2,
 name:"Traditional Kurta",
 price:1950,
-image:"https://images.unsplash.com/photo-1593032465175-481ac7f401a0",
-badge:"HOT"
+image:"https://images.unsplash.com/photo-1593032465175-481ac7f401a0"
 },
+
 {
 id:3,
 name:"Classic Panjabi",
 price:2400,
-image:"https://images.unsplash.com/photo-1610652492500-ded49ceeb378",
-badge:"BEST"
+image:"https://images.unsplash.com/photo-1610652492500-ded49ceeb378"
 }
+
 ]
 
-let cart=0
 
-const grid=document.getElementById("products-grid")
+/* RENDER PRODUCTS */
+
+const grid=document.getElementById("product-grid")
 
 products.forEach(p=>{
 
 grid.innerHTML+=`
 
-<div class="product-card bg-white rounded-xl overflow-hidden relative">
-
-<span class="badge">${p.badge}</span>
+<div class="product-card bg-white rounded-xl overflow-hidden">
 
 <img src="${p.image}" class="h-64 w-full object-cover">
 
@@ -336,8 +239,8 @@ grid.innerHTML+=`
 ৳${p.price}
 </p>
 
-<button onclick="addCart()"
-class="btn w-full py-2 rounded">
+<button onclick="addToCart(${p.id})"
+class="bg-green-700 text-white w-full py-2 rounded">
 Add To Cart
 </button>
 
@@ -349,16 +252,179 @@ Add To Cart
 
 })
 
-function addCart(){
 
-cart++
+/* CART LOGIC */
 
-document.getElementById("cart-count").innerText=cart
+let cart={}
+
+
+function addToCart(id){
+
+const product=products.find(p=>p.id===id)
+
+if(!cart[id]){
+cart[id]={...product,qty:1}
+}else{
+cart[id].qty++
+}
+
+updateCart()
+
+}
+
+
+function updateCart(){
+
+const items=Object.values(cart)
+
+const container=document.getElementById("cart-items")
+
+container.innerHTML=""
+
+let subtotal=0
+let count=0
+
+
+items.forEach(item=>{
+
+subtotal+=item.price*item.qty
+count+=item.qty
+
+container.innerHTML+=`
+
+<div class="flex items-center justify-between border p-2 rounded">
+
+<div>
+
+<p class="font-medium text-sm">${item.name}</p>
+<p class="text-xs text-gray-500">৳${item.price}</p>
+
+</div>
+
+<div class="flex items-center gap-2">
+
+<button onclick="changeQty(${item.id},-1)"
+class="px-2 border rounded">-</button>
+
+<span>${item.qty}</span>
+
+<button onclick="changeQty(${item.id},1)"
+class="px-2 border rounded">+</button>
+
+<button onclick="removeItem(${item.id})"
+class="text-red-500 ml-2">
+<i class="fas fa-trash"></i>
+</button>
+
+</div>
+
+</div>
+
+`
+
+})
+
+
+document.getElementById("cart-count").innerText=count
+
+document.getElementById("cart-subtotal").innerText="৳"+subtotal
+
+document.getElementById("bkash-total").innerText=subtotal
+
+
+if(items.length===0){
+container.innerHTML="<p class='text-gray-400'>Cart empty</p>"
+}
+
+}
+
+
+function changeQty(id,delta){
+
+cart[id].qty+=delta
+
+if(cart[id].qty<=0){
+delete cart[id]
+}
+
+updateCart()
+
+}
+
+
+function removeItem(id){
+
+delete cart[id]
+
+updateCart()
+
+}
+
+
+/* CART UI */
+
+function openCart(){
+
+document.getElementById("cart-drawer")
+.classList.remove("translate-x-full")
+
+document.getElementById("cart-overlay")
+.classList.remove("hidden")
+
+}
+
+
+function closeCart(){
+
+document.getElementById("cart-drawer")
+.classList.add("translate-x-full")
+
+document.getElementById("cart-overlay")
+.classList.add("hidden")
+
+}
+
+
+/* CHECKOUT */
+
+function openCheckout(){
+
+if(Object.keys(cart).length===0){
+alert("Cart empty")
+return
+}
+
+document.getElementById("checkout-modal")
+.classList.remove("hidden")
+
+}
+
+
+function closeCheckout(){
+
+document.getElementById("checkout-modal")
+.classList.add("hidden")
+
+}
+
+
+function placeOrder(e){
+
+e.preventDefault()
+
+alert("Order placed successfully!")
+
+cart={}
+
+updateCart()
+
+closeCheckout()
+
+closeCart()
 
 }
 
 </script>
 
 </body>
-
 </html>
