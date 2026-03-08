@@ -1,195 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AYHA | Fashion Collection</title>
-<meta name="description" content="Explore trendy clothes, shoes, bags, and accessories for your everyday style.">
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com"></script>
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: {
-        'urbor-green': '#2d6a4f',
-        'urbor-green-dark': '#1b4332',
-        'urbor-green-light': '#40916c',
-        'urbor-cream': '#faf7f2',
-      },
-      fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        display: ['Playfair Display', 'serif'],
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Basic styles for demo */
+    body { font-family: Arial, sans-serif; margin:0; padding:0; }
+    nav, footer { background:#333; color:#fff; padding:1rem; text-align:center; }
+    .hero-section { padding:2rem; background:#f5f5f5; text-align:center; }
+    #product-container { display:flex; flex-wrap:wrap; gap:1rem; padding:2rem; justify-content:center; }
+    .product-card { border:1px solid #ddd; padding:1rem; width:200px; text-align:center; }
+    button { cursor:pointer; padding:0.5rem 1rem; margin-top:0.5rem; }
+    /* Cart Sidebar */
+    #cart-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:none; z-index:99; }
+    #cart-sidebar { position:fixed; top:0; right:0; width:300px; height:100%; background:#fff; box-shadow:-2px 0 5px rgba(0,0,0,0.3); padding:1rem; overflow-y:auto; transform:translateX(100%); transition:0.3s; z-index:100; }
+    #cart-sidebar.open { transform:translateX(0); }
+    .cart-item { display:flex; justify-content:space-between; margin-bottom:1rem; }
+    /* Checkout Modal */
+    #checkout-modal { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:none; justify-content:center; align-items:center; z-index:101; }
+    #checkout-modal.open { display:flex; }
+    .checkout-content { background:#fff; padding:2rem; width:90%; max-width:400px; border-radius:8px; }
+    .checkout-content input, .checkout-content button { width:100%; margin-top:0.5rem; padding:0.5rem; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <span>My Shop</span>
+    <button onclick="openCartSidebar()">🛒 Cart (<span id="cart-count">0</span>)</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero-section">
+    <h1>Welcome to Our Store</h1>
+    <p>Browse products and add them to your cart</p>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section id="products">
+    <div id="product-container"></div>
+  </section>
+
+  <!-- CART SIDEBAR -->
+  <div id="cart-overlay" onclick="closeCartSidebar()"></div>
+  <div id="cart-sidebar">
+    <h2>Your Cart</h2>
+    <div id="cart-items"></div>
+    <hr>
+    <p>Total: $<span id="cart-total">0.00</span></p>
+    <button onclick="proceedToCheckout()">Checkout</button>
+  </div>
+
+  <!-- CHECKOUT MODAL -->
+  <div id="checkout-modal">
+    <div class="checkout-content">
+      <h2>Checkout</h2>
+      <form id="checkout-form">
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="tel" name="phone" placeholder="Phone" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="text" name="address" placeholder="Address" required>
+        <input type="text" name="transactionId" placeholder="Transaction ID" required>
+        <button type="submit">Place Order</button>
+        <button type="button" onclick="toggleCheckoutModal()">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    &copy; 2026 My Shop. All rights reserved.
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    // SAMPLE PRODUCTS
+    const products = [
+      { id: 1, name: 'Whole Chicken (3kg)', price: 1260, image: 'image/image1.png' },
+      { id: 2, name: 'Chicken Leg', price: 450, image: 'image/image2.png' },
+      { id: 3, name: 'Eggs (12pcs)', price: 180, image: 'image/image3.png' }
+    ];
+
+    let cart = {};
+
+    function renderProducts() {
+      const container = document.getElementById('product-container');
+      container.innerHTML = '';
+      products.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+          <img src="${p.image}" alt="${p.name}" style="width:100%; height:150px; object-fit:cover;">
+          <h3>${p.name}</h3>
+          <p>$${p.price}</p>
+          <button onclick="addToCart(${p.id})">Add to Cart</button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function addToCart(id) {
+      if (!cart[id]) cart[id] = { ...products.find(p=>p.id===id), quantity:1 };
+      else cart[id].quantity++;
+      updateCartUI();
+    }
+
+    function removeFromCart(id) {
+      delete cart[id];
+      updateCartUI();
+    }
+
+    function changeCartQty(id, delta) {
+      if(cart[id]) {
+        cart[id].quantity += delta;
+        if(cart[id].quantity <= 0) removeFromCart(id);
+        else updateCartUI();
       }
     }
-  }
-}
-</script>
-<style>
-body { background-color: #faf7f2; color: #1e1b1b; scroll-behavior: smooth; }
-.glass-premium { background: rgba(255,255,255,0.85); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.5); box-shadow: 0 15px 35px -8px rgba(0,0,0,0.1); }
-.glass-card-premium { background: rgba(250,255,255,0.9); border: 1px solid rgba(45,106,79,0.15); transition: all 0.3s ease; }
-.glass-card-premium:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -10px rgba(45,106,79,0.15); border-color: rgba(45,106,79,0.3); }
-.btn-premium { background: linear-gradient(145deg, #2d6a4f, #1b4332); color: white; font-weight: 500; transition: all 0.3s ease; border: none; }
-.btn-premium:hover { transform: translateY(-2px); box-shadow: 0 12px 28px -8px #2d6a4f99; }
-.btn-premium:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
-.qty-control { display: flex; align-items: center; background: #f0eae4; border-radius: 10px; overflow: hidden; border: 1px solid rgba(45,106,79,0.15); }
-.qty-btn { width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:transparent;border:none;color:#2d6a4f;font-size:14px;cursor:pointer; }
-.qty-btn:hover { background: rgba(45,106,79,0.1); }
-.qty-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-.qty-value { min-width:36px; text-align:center; font-weight:600; font-size:14px; }
-.cart-scroll::-webkit-scrollbar { width: 4px; }
-.cart-scroll::-webkit-scrollbar-thumb { background: #2d6a4f; border-radius: 4px; }
-input:focus, textarea:focus { outline: none; box-shadow: 0 0 0 3px rgba(45,106,79,0.15); }
-/* HERO */
-.hero-section { height: 70vh; min-height: 500px; }
-@media (min-width:1024px) { .hero-section { height: 85vh; min-height: 650px; } }
-.hero-overlay { background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, transparent 100%); }
-/* PRODUCT GRID */
-.product-grid { display:grid; grid-template-columns:1fr; gap:2rem; }
-@media(min-width:768px){.product-grid{grid-template-columns:repeat(2,1fr); gap:2.5rem;}}
-@media(min-width:1280px){.product-grid{grid-template-columns:repeat(3,1fr); gap:2.5rem;}}
-.product-card { display:flex; flex-direction:column; height:100%; min-height:480px; }
-.product-card-image { height:240px; width:100%; object-fit:cover; }
-.product-card-content { display:flex; flex-direction:column; flex-grow:1; padding:1.5rem; }
-.product-card-title { font-size:1.125rem; font-weight:700; color:#1e1b1b; margin-bottom:0.5rem; min-height:3.5rem; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-.product-card-desc { font-size:0.875rem; color:#6b7280; margin-bottom:1.5rem; flex-grow:1; min-height:4rem; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
-.product-card-footer { display:flex; justify-content:space-between; align-items:center; padding-top:1rem; border-top:1px solid rgba(45,106,79,0.15); margin-top:auto; }
-</style>
-</head>
-<body class="antialiased">
 
-<!-- NAVIGATION -->
-<nav class="fixed w-full z-50 glass-premium border-b border-white/30">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<div class="flex justify-between h-16 items-center">
-<div class="flex items-center gap-3"><span class="text-3xl font-display font-semibold text-gray-900"><span class="text-urbor-green"> AYHA </span><span class="text-urbor-green"> آيَة </span></span></div>
-<div class="hidden md:flex items-center space-x-6 text-sm font-medium">
-<a href="#products" class="text-gray-800 hover:text-urbor-green">Our Products</a>
-<a href="#why-us" class="text-gray-800 hover:text-urbor-green">Why Us</a>
-<a href="#testimonials" class="text-gray-800 hover:text-urbor-green">Testimonials</a>
-<a href="#faq" class="text-gray-800 hover:text-urbor-green">FAQ</a>
-</div>
-<div class="flex items-center space-x-4">
-<button onclick="openCartSidebar()" class="relative flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 px-4 py-2 rounded-lg transition shadow-sm">
-<i class="fas fa-shopping-cart text-lg text-urbor-green"></i>
-<span class="hidden sm:inline text-sm font-bold">Cart</span>
-<span id="cart-count" class="flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-urbor-green rounded-full">0</span>
-</button>
-<button id="mobile-menu-btn" class="md:hidden text-xl text-gray-800"><i class="fas fa-bars"></i></button>
-</div>
-</div>
-</div>
-<div id="mobile-menu" class="hidden md:hidden bg-white border-t px-4 py-3 space-y-2">
-<a href="#products" class="block py-2 text-gray-800">Our Products</a>
-<a href="#why-us" class="block py-2 text-gray-800">Why Us</a>
-<a href="#testimonials" class="block py-2 text-gray-800">Testimonials</a>
-<a href="#faq" class="block py-2 text-gray-800">FAQ</a>
-</div>
-</nav>
+    function updateCartUI() {
+      const itemsContainer = document.getElementById('cart-items');
+      const countEl = document.getElementById('cart-count');
+      const totalEl = document.getElementById('cart-total');
+      itemsContainer.innerHTML = '';
+      let total = 0, count = 0;
+      for (const id in cart) {
+        const item = cart[id];
+        total += item.price * item.quantity;
+        count += item.quantity;
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+          <span>${item.name} x ${item.quantity}</span>
+          <span>
+            $${(item.price*item.quantity).toFixed(2)}
+            <button onclick="changeCartQty(${id},1)">+</button>
+            <button onclick="changeCartQty(${id},-1)">-</button>
+            <button onclick="removeFromCart(${id})">🗑️</button>
+          </span>
+        `;
+        itemsContainer.appendChild(div);
+      }
+      countEl.innerText = count;
+      totalEl.innerText = total.toFixed(2);
+    }
 
-<!-- HERO -->
-<section class="relative hero-section pt-16">
-<img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=600&q=80" alt="Premium fashion" class="w-full h-full object-cover">
-<div class="absolute inset-0 hero-overlay flex items-end">
-<div class="max-w-7xl mx-auto px-4 pb-16 w-full">
-<div class="max-w-3xl">
-<h1 class="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4">Trendy Fashion Collection</h1>
-<p class="text-white/90 text-lg md:text-xl mb-6">Elegant, Comfortable & Affordable Styles</p>
-<a href="#products" class="inline-flex items-center gap-2 btn-premium px-8 py-4 rounded-lg text-base font-medium">
-Shop Now <i class="fas fa-arrow-down"></i>
-</a>
-</div>
-</div>
-</div>
-</section>
+    function openCartSidebar() {
+      document.getElementById('cart-sidebar').classList.add('open');
+      document.getElementById('cart-overlay').style.display = 'block';
+    }
+    function closeCartSidebar() {
+      document.getElementById('cart-sidebar').classList.remove('open');
+      document.getElementById('cart-overlay').style.display = 'none';
+    }
 
-<!-- PRODUCTS -->
-<section id="products" class="py-20 bg-[#faf7f2]">
-<div class="max-w-7xl mx-auto px-4">
-<div class="text-center max-w-2xl mx-auto mb-12">
-<span class="text-urbor-green uppercase tracking-wider text-xs font-semibold">NEW ARRIVALS</span>
-<h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900 mt-2 mb-3">Our Fashion Collection</h2>
-<p class="text-gray-600">Explore trendy clothes, shoes, bags, and accessories for your everyday style.</p>
-</div>
-<div class="product-grid" id="product-container"></div>
-</div>
-</section>
+    function proceedToCheckout() {
+      toggleCheckoutModal();
+      closeCartSidebar();
+    }
 
-<!-- FOOTER -->
-<footer class="bg-gray-950 text-gray-300 pt-12 pb-6">
-<div class="max-w-7xl mx-auto px-4">
-<div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8">
-<div class="md:col-span-2">
-<div class="flex items-center gap-2 mb-3">
-<span class="text-xl font-display font-semibold text-white">AYHA<span class="text-urbor-green">آيَة</span></span>
-</div>
-<p class="text-gray-400 text-sm max-w-md">Trendy Fashion & Accessories, Curated for Style and Comfort.</p>
-</div>
-<div>
-<h4 class="font-bold text-white mb-3 text-sm">Explore</h4>
-<ul class="space-y-1 text-gray-400 text-sm">
-<li><a href="#products" class="hover:text-white">Our Products</a></li>
-<li><a href="#why-us" class="hover:text-white">Why Us</a></li>
-<li><a href="#faq" class="hover:text-white">FAQ</a></li>
-</ul>
-</div>
-<div>
-<h4 class="font-bold text-white mb-3 text-sm">Contact</h4>
-<ul class="space-y-1 text-gray-400 text-sm">
-<li><i class="fas fa-map-marker-alt mr-2 text-urbor-green"></i>Satkania, Chattogram</li>
-<li><i class="fas fa-phone-alt mr-2 text-urbor-green"></i>+880 17 4264 6973</li>
-<li><i class="fas fa-envelope mr-2 text-urbor-green"></i>ayha@gmail.com</li>
-</ul>
-</div>
-</div>
-<div class="text-center text-gray-500 text-xs border-t border-gray-800 pt-4">&copy; 2026 AYHA. All rights reserved.</div>
-</div>
-</footer>
+    function toggleCheckoutModal() {
+      document.getElementById('checkout-modal').classList.toggle('open');
+    }
 
-<!-- SCRIPT -->
-<script>
-const products = [
-  {id:1,name:"Kurta - Classic Cream",price:1260,image:"https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf",desc:"Elegant traditional kurta for men, breathable fabric, perfect for cultural events."},
-  {id:2,name:"Panjabi - Dark Green",price:1499,image:"https://images.unsplash.com/photo-1591027405708-97cd0b1a3e05",desc:"Classic Panjabi with modern fit, comfortable for daily wear."},
-  {id:3,name:"Kurta - Maroon Silk",price:1799,image:"https://images.unsplash.com/photo-1614286313053-8b09df6d2b54",desc:"Premium silk kurta, soft touch, for festive occasions."},
-  {id:4,name:"Panjabi - Light Blue",price:1199,image:"https://images.unsplash.com/photo-1624460488989-3e7f5ef8c72e",desc:"Casual light blue Panjabi, breathable and stylish."}
-];
-let cart = {}, productQuantities={};
-function renderProducts(){
-  const container = document.getElementById('product-container');
-  container.innerHTML = products.map(p=>{
-    const qty = productQuantities[p.id]||1;
-    return `
-      <div class="glass-card-premium product-card">
-        <img src="${p.image}" alt="${p.name}" class="product-card-image rounded-t-lg">
-        <div class="product-card-content flex flex-col">
-          <h3 class="product-card-title">${p.name}</h3>
-          <p class="product-card-desc">${p.desc}</p>
-          <div class="product-card-footer items-center">
-            <span class="font-semibold text-urbor-green">৳${p.price.toLocaleString()}</span>
-            <div class="flex items-center gap-2">
-              <div class="qty-control">
-                <button class="qty-btn" onclick="decreaseQty(${p.id})">-</button>
-                <span class="qty-value">${qty}</span>
-                <button class="qty-btn" onclick="increaseQty(${p.id})">+</button>
-              </div>
-              <button class="btn-premium px-3 py-1 text-xs" onclick="addToCart(${p.id})">Add</button>
-            </div>
-          </div>
-        </div>
-      </div>`;
-  }).join('');
-}
-function increaseQty(id){ productQuantities[id] = (productQuantities[id]||1)+1; renderProducts(); }
-function decreaseQty(id){ productQuantities[id] = Math.max(1,(productQuantities[id]||1)-1); renderProducts(); }
-function addToCart(id){ const p = products.find(p=>p.id===id); const qty = productQuantities[id]||1; if(cart[id]) cart[id].quantity+=qty; else cart[id]={...p,quantity:qty}; updateCartUI();}
-function updateCartUI(){ const countEl=document.getElementById('cart-count'); countEl.textContent = Object.values(cart).reduce((a,c)=>a+c.quantity,0); }
-renderProducts();
-</script>
+    async function handleCheckout(e) {
+      e.preventDefault();
+      const form = e.target;
+      const data = {
+        name: form.name.value,
+        phone: form.phone.value,
+        email: form.email.value,
+        address: form.address.value,
+        transactionId: form.transactionId.value,
+        total: parseFloat(document.getElementById('cart-total').innerText),
+        items: Object.values(cart)
+      };
+
+      try {
+        const res = await fetch('/api/sub', {
+          method:'POST',
+          headers:{ 'Content-Type':'application/json' },
+          body: JSON.stringify(data)
+        });
+        const json = await res.json();
+        if(json.success){
+          alert(`Order placed! Transaction ID: ${json.transactionId}`);
+          cart = {};
+          updateCartUI();
+          toggleCheckoutModal();
+          form.reset();
+        } else {
+          alert('Error: '+ (json.error || 'Unknown error'));
+        }
+      } catch(err) {
+        console.error(err);
+        alert('Failed to submit order');
+      }
+    }
+
+    document.getElementById('checkout-form').addEventListener('submit', handleCheckout);
+
+    // INIT
+    renderProducts();
+    updateCartUI();
+  </script>
+
 </body>
 </html>
