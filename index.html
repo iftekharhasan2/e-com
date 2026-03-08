@@ -3,54 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AYHA Fashion | Trendy Clothing & Accessories</title>
-<meta name="description" content="Trendy fashion collection, ethically curated for style and comfort. Order online via bKash.">
-<!-- Tailwind CSS -->
+<title>AYHA | Fashion & Accessories</title>
+<meta name="description" content="Trendy fashion & accessories, ethically curated and delivered across Bangladesh. Order online via bKash.">
 <script src="https://cdn.tailwindcss.com"></script>
-<!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <script>
 tailwind.config = {
-  theme: {
-    extend: {
-      colors: {
-        'urbor-green': '#2d6a4f',
-        'urbor-green-dark': '#1b4332',
-        'urbor-green-light': '#40916c',
-        'urbor-cream': '#faf7f2',
-      },
-      fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        display: ['Playfair Display', 'serif'],
-      }
-    }
-  }
+theme: {
+extend: {
+colors: {
+'urbor-green': '#2d6a4f',
+'urbor-green-dark': '#1b4332',
+'urbor-green-light': '#40916c',
+'urbor-cream': '#faf7f2',
+},
+fontFamily: {
+sans: ['Inter', 'sans-serif'],
+display: ['Playfair Display', 'serif'],
+}
+}
+}
 }
 </script>
+
 <style>
 body { background-color: #faf7f2; color: #1e1b1b; scroll-behavior: smooth; }
-.glass-premium { background: rgba(255,255,255,0.85); backdrop-filter: blur(10px); border:1px solid rgba(255,255,255,0.5); box-shadow:0 15px 35px -8px rgba(0,0,0,0.1);}
-.glass-card-premium { background: rgba(250,255,255,0.9); border:1px solid rgba(45,106,79,0.15); transition: all 0.3s ease;}
-.glass-card-premium:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -10px rgba(45,106,79,0.15); border-color: rgba(45,106,79,0.3);}
-.btn-premium { background: linear-gradient(145deg,#2d6a4f,#1b4332); color:white; font-weight:500; transition:all 0.3s ease; border:none;}
-.btn-premium:hover { transform: translateY(-2px); box-shadow:0 12px 28px -8px #2d6a4f99;}
-.btn-premium:disabled { opacity:0.7; cursor:not-allowed; transform:none;}
+.glass-premium { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.5); box-shadow: 0 15px 35px -8px rgba(0,0,0,0.1);}
+.glass-card-premium { background: rgba(250,255,255,0.9); border: 1px solid rgba(45,106,79,0.15); transition: all 0.3s ease; }
+.glass-card-premium:hover { transform: translateY(-4px); box-shadow:0 20px 40px -10px rgba(45,106,79,0.15); border-color: rgba(45,106,79,0.3);}
+.btn-premium { background: linear-gradient(145deg,#2d6a4f,#1b4332); color:white; font-weight:500; transition: all 0.3s ease; border:none; }
+.btn-premium:hover { transform: translateY(-2px); box-shadow:0 12px 28px -8px #2d6a4f99; }
 .qty-control { display:flex; align-items:center; gap:0; background:#f0eae4; border-radius:10px; overflow:hidden; border:1px solid rgba(45,106,79,0.15);}
 .qty-btn { width:36px; height:36px; display:flex; align-items:center; justify-content:center; background:transparent; border:none; color:#2d6a4f; font-size:14px; cursor:pointer;}
 .qty-btn:hover { background: rgba(45,106,79,0.1);}
-.qty-btn:disabled { opacity:0.4; cursor:not-allowed;}
 .qty-value { min-width:36px; text-align:center; font-weight:600; font-size:14px;}
-.cart-scroll::-webkit-scrollbar { width:4px;}
+.cart-scroll::-webkit-scrollbar { width:4px; }
 .cart-scroll::-webkit-scrollbar-thumb { background:#2d6a4f; border-radius:4px;}
-input:focus, textarea:focus { outline:none; box-shadow:0 0 0 3px rgba(45,106,79,0.15);}
+input:focus, textarea:focus { outline:none; box-shadow:0 0 0 3px rgba(45,106,79,0.15); }
+
 .hero-section { height:70vh; min-height:500px;}
-@media(min-width:1024px){.hero-section{height:85vh; min-height:650px;}}
+@media (min-width:1024px){ .hero-section { height:85vh; min-height:650px; } }
 .hero-overlay { background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);}
 .product-grid { display:grid; grid-template-columns:1fr; gap:2rem;}
-@media(min-width:768px){.product-grid{grid-template-columns:repeat(2,1fr); gap:2.5rem;}}
-@media(min-width:1280px){.product-grid{grid-template-columns:repeat(3,1fr); gap:2.5rem;}}
+@media(min-width:768px){ .product-grid { grid-template-columns:repeat(2,1fr); gap:2.5rem;}}
+@media(min-width:1280px){ .product-grid { grid-template-columns:repeat(3,1fr); gap:2.5rem;}}
 .product-card { display:flex; flex-direction:column; height:100%; min-height:480px;}
 .product-card-image { height:240px; width:100%; object-fit:cover;}
 .product-card-content { display:flex; flex-direction:column; flex-grow:1; padding:1.5rem;}
@@ -59,13 +57,14 @@ input:focus, textarea:focus { outline:none; box-shadow:0 0 0 3px rgba(45,106,79,
 .product-card-footer { display:flex; justify-content:space-between; align-items:center; padding-top:1rem; border-top:1px solid rgba(45,106,79,0.15); margin-top:auto;}
 </style>
 </head>
+
 <body class="antialiased">
 
-<!-- NAVIGATION -->
+<!-- NAV -->
 <nav class="fixed w-full z-50 glass-premium border-b border-white/30">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="flex justify-between h-16 items-center">
-<div class="flex items-center gap-3"><span class="text-3xl font-display font-semibold text-gray-900"><span class="text-urbor-green">AYHA</span><span class="text-urbor-green"> آيَة</span></span></div>
+<div class="flex items-center gap-3"><span class="text-3xl font-display font-semibold text-gray-900"><span class="text-urbor-green">AYHA</span> <span class="text-urbor-green">آيَة</span></span></div>
 <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
 <a href="#products" class="text-gray-800 hover:text-urbor-green">Our Products</a>
 <a href="#why-us" class="text-gray-800 hover:text-urbor-green">Why Us</a>
@@ -105,10 +104,7 @@ input:focus, textarea:focus { outline:none; box-shadow:0 0 0 3px rgba(45,106,79,
 </div>
 </div>
 <div class="p-5 border-t bg-white">
-<div class="flex justify-between items-center mb-4">
-<span class="text-gray-600 text-sm">Subtotal</span>
-<span id="sidebar-total" class="text-lg font-bold text-urbor-green">৳0.00</span>
-</div>
+<div class="flex justify-between items-center mb-4"><span class="text-gray-600 text-sm">Subtotal</span><span id="sidebar-total" class="text-lg font-bold text-urbor-green">৳0.00</span></div>
 <button onclick="proceedToCheckout()" class="w-full btn-premium py-3 rounded-lg text-sm font-medium flex justify-center items-center gap-2">Proceed to Checkout <i class="fas fa-arrow-right"></i></button>
 <p class="text-xs text-center text-gray-400 mt-3"><i class="fas fa-truck text-urbor-green mr-1"></i> Free delivery across Dhaka</p>
 </div>
@@ -116,26 +112,14 @@ input:focus, textarea:focus { outline:none; box-shadow:0 0 0 3px rgba(45,106,79,
 
 <!-- HERO -->
 <section class="relative hero-section pt-16">
-<img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=600&q=80" alt="Fashion collection" class="w-full h-full object-cover">
+<img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=600&q=80" alt="Premium Fashion" class="w-full h-full object-cover">
 <div class="absolute inset-0 hero-overlay flex items-end">
 <div class="max-w-7xl mx-auto px-4 pb-16 w-full">
 <div class="max-w-3xl">
-<h1 class="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4">Trendy Fashion & Accessories</h1>
-<p class="text-white/90 text-lg md:text-xl mb-6">Curated style • Comfortable fit • Order via bKash</p>
+<h1 class="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4">Premium Fashion Collection</h1>
+<p class="text-white/90 text-lg md:text-xl mb-6">Trendy • Ethically Curated • Order via bKash</p>
 <a href="#products" class="inline-flex items-center gap-2 btn-premium px-8 py-4 rounded-lg text-base font-medium">Shop Now <i class="fas fa-arrow-down"></i></a>
 </div>
-</div>
-</div>
-</section>
-
-<!-- USP -->
-<section id="why-us" class="py-12 bg-white border-b">
-<div class="max-w-7xl mx-auto px-4">
-<div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-<div><div class="w-16 h-16 mx-auto bg-green-50 rounded-xl flex items-center justify-center mb-3 border border-green-100"><i class="fas fa-snowflake text-2xl text-urbor-green"></i></div><p class="font-semibold text-gray-800">Premium Quality</p><p class="text-xs text-gray-500 mt-1">High-quality fashion products</p></div>
-<div><div class="w-16 h-16 mx-auto bg-green-50 rounded-xl flex items-center justify-center mb-3 border border-green-100"><i class="fas fa-shield-alt text-2xl text-urbor-green"></i></div><p class="font-semibold text-gray-800">Authentic & Trendy</p><p class="text-xs text-gray-500 mt-1">Only genuine products, no fakes</p></div>
-<div><div class="w-16 h-16 mx-auto bg-green-50 rounded-xl flex items-center justify-center mb-3 border border-green-100"><i class="fas fa-kaaba text-2xl text-urbor-green"></i></div><p class="font-semibold text-gray-800">Hassle-Free Returns</p><p class="text-xs text-gray-500 mt-1">Easy returns if you’re not satisfied</p></div>
-<div><div class="w-16 h-16 mx-auto bg-green-50 rounded-xl flex items-center justify-center mb-3 border border-green-100"><i class="fas fa-box-open text-2xl text-urbor-green"></i></div><p class="font-semibold text-gray-800">Premium Packaging</p><p class="text-xs text-gray-500 mt-1">Delivered quickly & safely</p></div>
 </div>
 </div>
 </section>
@@ -145,113 +129,147 @@ input:focus, textarea:focus { outline:none; box-shadow:0 0 0 3px rgba(45,106,79,
 <div class="max-w-7xl mx-auto px-4">
 <div class="text-center max-w-2xl mx-auto mb-12">
 <span class="text-urbor-green uppercase tracking-wider text-xs font-semibold">New Arrivals</span>
-<h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900 mt-2 mb-3">Our Fashion Collection</h2>
-<p class="text-gray-600">Explore trendy clothes, shoes, bags, and accessories for your everyday style.</p>
+<h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900 mt-2 mb-3">Our Collection</h2>
+<p class="text-gray-600">Explore trendy fashion items for every occasion.</p>
 </div>
 <div class="product-grid" id="product-container"></div>
 </div>
 </section>
 
-<!-- TESTIMONIALS -->
-<section id="testimonials" class="py-20 bg-white">
+<!-- WHY US -->
+<section id="why-us" class="py-20 bg-white">
 <div class="max-w-7xl mx-auto px-4">
-<div class="text-center max-w-2xl mx-auto mb-12">
-<span class="text-urbor-green uppercase tracking-wider text-xs font-semibold">Our Happy Shoppers</span>
-<h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900 mt-2 mb-3">Loved by Fashion Enthusiasts</h2>
+<div class="text-center mb-12">
+<h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900">Why Choose AYHA?</h2>
+<p class="text-gray-600 mt-2">Premium quality, sustainable materials, and convenient delivery.</p>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-<div class="glass-card-premium rounded-2xl p-6">
-<p class="text-gray-700 text-sm mb-4 italic">"Absolutely love the summer collection! Perfect fit and style."</p>
-<div class="flex items-center"><span class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-urbor-green font-bold text-sm mr-3">SR</span><div><h4 class="font-bold text-gray-900 text-sm">Sadia Rahman</h4><p class="text-gray-500 text-xs">Satkania,Chattogram</p></div></div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="glass-card-premium rounded-2xl p-6 text-center">
+<i class="fas fa-leaf text-4xl text-urbor-green mb-4"></i>
+<h3 class="font-semibold text-lg mb-2">Sustainable Fashion</h3>
+<p class="text-gray-600 text-sm">Eco-friendly materials and ethical production processes.</p>
 </div>
-<div class="glass-card-premium rounded-2xl p-6">
-<p class="text-gray-700 text-sm mb-4 italic">"Fast delivery and smooth shopping experience. Exactly as described."</p>
-<div class="flex items-center"><span class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-urbor-green font-bold text-sm mr-3">AK</span><div><h4 class="font-bold text-gray-900 text-sm">Ahmed Khan</h4><p class="text-gray-500 text-xs">Banani, Dhaka</p></div></div>
+<div class="glass-card-premium rounded-2xl p-6 text-center">
+<i class="fas fa-truck text-4xl text-urbor-green mb-4"></i>
+<h3 class="font-semibold text-lg mb-2">Fast Delivery</h3>
+<p class="text-gray-600 text-sm">Quick delivery across Dhaka with reliable tracking.</p>
 </div>
-<div class="glass-card-premium rounded-2xl p-6">
-<p class="text-gray-700 text-sm mb-4 italic">"Found exactly what I wanted! Trendy and high-quality."</p>
-<div class="flex items-center"><span class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-urbor-green font-bold text-sm mr-3">NT</span><div><h4 class="font-bold text-gray-900 text-sm">Nusrat Tasnim</h4><p class="text-gray-500 text-xs">Puthia,Rajsahi</p></div></div>
+<div class="glass-card-premium rounded-2xl p-6 text-center">
+<i class="fas fa-star text-4xl text-urbor-green mb-4"></i>
+<h3 class="font-semibold text-lg mb-2">Premium Quality</h3>
+<p class="text-gray-600 text-sm">Every item curated to meet high standards of fashion and comfort.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials" class="py-20 bg-[#faf7f2]">
+<div class="max-w-7xl mx-auto px-4">
+<div class="text-center mb-12">
+<h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900">Testimonials</h2>
+<p class="text-gray-600 mt-2">What our customers are saying</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="glass-card-premium p-6 rounded-2xl">
+<p class="text-gray-700 mb-4">"Amazing quality! Loved the shirt I ordered. Will buy again!"</p>
+<div class="flex items-center gap-3">
+<img src="https://randomuser.me/api/portraits/men/45.jpg" class="w-10 h-10 rounded-full">
+<div><p class="font-semibold text-sm">Rafiq Ahmed</p><p class="text-xs text-gray-500">Dhaka</p></div>
+</div>
+</div>
+<div class="glass-card-premium p-6 rounded-2xl">
+<p class="text-gray-700 mb-4">"The delivery was super fast and the product exceeded expectations."</p>
+<div class="flex items-center gap-3">
+<img src="https://randomuser.me/api/portraits/women/48.jpg" class="w-10 h-10 rounded-full">
+<div><p class="font-semibold text-sm">Shabnam Khatun</p><p class="text-xs text-gray-500">Chittagong</p></div>
+</div>
+</div>
+<div class="glass-card-premium p-6 rounded-2xl">
+<p class="text-gray-700 mb-4">"Highly recommend AYHA for premium quality fashion items."</p>
+<div class="flex items-center gap-3">
+<img src="https://randomuser.me/api/portraits/men/52.jpg" class="w-10 h-10 rounded-full">
+<div><p class="font-semibold text-sm">Fahim Rahman</p><p class="text-xs text-gray-500">Sylhet</p></div>
 </div>
 </div>
 </div>
 </section>
 
 <!-- FAQ -->
-<section id="faq" class="py-20 bg-[#faf7f2]">
-<div class="max-w-3xl mx-auto px-4">
-<div class="text-center mb-8">
-<span class="text-urbor-green uppercase tracking-wider text-xs font-semibold">Help Center</span>
-<h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900 mt-2">Frequently Asked Questions</h2>
+<section id="faq" class="py-20 bg-white">
+<div class="max-w-7xl mx-auto px-4">
+<div class="text-center mb-12">
+<h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900">FAQ</h2>
+<p class="text-gray-600 mt-2">Frequently asked questions</p>
 </div>
-<div class="space-y-3">
-<div class="glass-card-premium rounded-xl overflow-hidden"><button class="faq-btn w-full flex justify-between items-center p-4 text-left font-medium text-gray-900 text-sm"><span>What sizes do your clothes come in?</span><i class="fas fa-chevron-down text-urbor-green transition-transform"></i></button><div class="faq-content hidden px-4 pb-4 text-gray-600 text-sm">Sizes XS to XXL for men, women, and kids.</div></div>
-<div class="glass-card-premium rounded-xl overflow-hidden"><button class="faq-btn w-full flex justify-between items-center p-4 text-left font-medium text-gray-900 text-sm"><span>Can I return or exchange an item?</span><i class="fas fa-chevron-down text-urbor-green transition-transform"></i></button><div class="faq-content hidden px-4 pb-4 text-gray-600 text-sm">Return or exchange within 7 days if unused.</div></div>
-<div class="glass-card-premium rounded-xl overflow-hidden"><button class="faq-btn w-full flex justify-between items-center p-4 text-left font-medium text-gray-900 text-sm"><span>Do you deliver nationwide?</span><i class="fas fa-chevron-down text-urbor-green transition-transform"></i></button><div class="faq-content hidden px-4 pb-4 text-gray-600 text-sm">Currently Dhaka only.</div></div>
-<div class="glass-card-premium rounded-xl overflow-hidden"><button class="faq-btn w-full flex justify-between items-center p-4 text-left font-medium text-gray-900 text-sm"><span>What payment methods are accepted?</span><i class="fas fa-chevron-down text-urbor-green transition-transform"></i></button><div class="faq-content hidden px-4 pb-4 text-gray-600 text-sm">bKash, Cash on Delivery.</div></div>
+<div class="max-w-3xl mx-auto space-y-4">
+<div class="border rounded-lg overflow-hidden">
+<button class="w-full text-left px-6 py-4 flex justify-between items-center faq-btn"><span>How long does delivery take?</span><i class="fas fa-chevron-down"></i></button>
+<div class="faq-content px-6 py-4 hidden text-gray-600">Delivery typically takes 1-3 business days in Dhaka.</div>
+</div>
+<div class="border rounded-lg overflow-hidden">
+<button class="w-full text-left px-6 py-4 flex justify-between items-center faq-btn"><span>Can I pay via bKash?</span><i class="fas fa-chevron-down"></i></button>
+<div class="faq-content px-6 py-4 hidden text-gray-600">Yes, we accept bKash payments for all online orders.</div>
+</div>
+<div class="border rounded-lg overflow-hidden">
+<button class="w-full text-left px-6 py-4 flex justify-between items-center faq-btn"><span>Do you offer returns?</span><i class="fas fa-chevron-down"></i></button>
+<div class="faq-content px-6 py-4 hidden text-gray-600">Yes, returns accepted within 7 days of delivery for unused items.</div>
+</div>
 </div>
 </div>
 </section>
 
 <!-- FOOTER -->
-<footer class="bg-white py-8 border-t">
-<div class="max-w-7xl mx-auto px-4 text-center text-gray-500 text-sm">© 2026 AYHA Fashion. All rights reserved.</div>
+<footer class="bg-urbor-green text-white py-12">
+<div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+<div>
+<h3 class="font-bold text-lg mb-4">AYHA</h3>
+<p>Premium Fashion & Accessories delivered across Bangladesh.</p>
+</div>
+<div>
+<h3 class="font-bold text-lg mb-4">Quick Links</h3>
+<ul class="space-y-2">
+<li><a href="#products" class="hover:underline">Products</a></li>
+<li><a href="#why-us" class="hover:underline">Why Us</a></li>
+<li><a href="#testimonials" class="hover:underline">Testimonials</a></li>
+<li><a href="#faq" class="hover:underline">FAQ</a></li>
+</ul>
+</div>
+<div>
+<h3 class="font-bold text-lg mb-4">Contact</h3>
+<p>017XXXXXXXX</p>
+<p>info@ayha.com</p>
+<p>Dhaka, Bangladesh</p>
+</div>
+</div>
+<div class="text-center mt-8 text-sm text-white/60">© <span id="year"></span> AYHA. All rights reserved.</div>
 </footer>
 
-<!-- SCRIPT -->
 <script>
 const products = [
-  {id:1,name:"Whole Chicken (3kg)",price:1260,image:"https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf",desc:"Farm‑fresh whole chicken, perfect for family meals."},
-  {id:2,name:"Men's Traditional Panjabi",price:1500,image:"https://images.unsplash.com/photo-1586123790353-c6e06f58fce7",desc:"Comfortable cotton Panjabi for festive occasions."},
-  {id:3,name:"Women's Kurta Set",price:1200,image:"https://images.unsplash.com/photo-1593032465177-5b802ff6cd47",desc:"Elegant Kurta with matching pants and dupatta."},
-  {id:4,name:"Leather Handbag",price:3200,image:"https://images.unsplash.com/photo-1593032465177-5b802ff6cd47",desc:"Premium leather handbag for everyday use."}
+{ id:1, name:"Fashion Shirt", price:1200, image:"https://images.unsplash.com/photo-1610652492500-ded49ceeb378", desc:"Stylish cotton shirt, perfect for casual wear." },
+{ id:2, name:"Classic Pants", price:1500, image:"https://images.unsplash.com/photo-1593032465175-481ac7f401a0", desc:"Comfortable and trendy pants for daily wear." },
+{ id:3, name:"Leather Bag", price:3200, image:"https://images.unsplash.com/photo-1602810316693-3667c854239a", desc:"Premium leather bag, perfect for office and travel." }
 ];
+let cart = {}; let productQuantities = {};
 
-const cart = [];
-const container = document.getElementById("product-container");
-
-function renderProducts(){
-container.innerHTML="";
-products.forEach(p=>{
-const card=document.createElement("div");card.className="glass-card-premium product-card rounded-2xl overflow-hidden";
-card.innerHTML=`<img class="product-card-image" src="${p.image}" alt="${p.name}"><div class="product-card-content"><h3 class="product-card-title">${p.name}</h3><p class="product-card-desc">${p.desc}</p><div class="product-card-footer"><span class="text-urbor-green font-bold">৳${p.price}</span><button class="btn-premium px-4 py-2 rounded-lg text-sm" onclick="addToCart(${p.id})"><i class="fas fa-cart-plus mr-1"></i>Add</button></div></div>`;
-container.appendChild(card);
-});
-}
-
-function addToCart(id){
-const prod=products.find(p=>p.id===id);
-const existing=cart.find(c=>c.id===id);
-if(existing){existing.qty++;}else{cart.push({...prod,qty:1});}
-updateCartUI();
-}
-
-function updateCartUI(){
-const itemsDiv=document.getElementById("sidebar-cart-items");
-const emptyDiv=document.getElementById("sidebar-empty");
-const count=document.getElementById("cart-count");
-itemsDiv.innerHTML="";
-if(cart.length===0){emptyDiv.classList.remove("hidden");count.textContent=0;}
-else{emptyDiv.classList.add("hidden");count.textContent=cart.reduce((a,b)=>a+b.qty,0);
-cart.forEach(c=>{
-const div=document.createElement("div");div.className="flex justify-between items-center p-2 bg-white rounded-lg";
-div.innerHTML=`<span>${c.name} x ${c.qty}</span><span>৳${c.price*c.qty}</span>`;
-itemsDiv.appendChild(div);
-});}
-document.getElementById("sidebar-total").textContent=`৳${cart.reduce((a,b)=>a+b.qty*b.price,0)}`;
-}
-
-function openCartSidebar(){document.getElementById("cart-overlay").classList.remove("hidden");document.getElementById("cart-sidebar").classList.remove("-translate-x-full");updateCartUI();}
-function closeCartSidebar(){document.getElementById("cart-overlay").classList.add("hidden");document.getElementById("cart-sidebar").classList.add("-translate-x-full");}
-
-function proceedToCheckout(){alert("Redirecting to bKash payment stub (API not implemented)");}
-
-document.querySelectorAll(".faq-btn").forEach(btn=>{
-btn.addEventListener("click",()=>{const content=btn.nextElementSibling;content.classList.toggle("hidden");btn.querySelector("i").classList.toggle("rotate-180");});
-});
-
-document.getElementById("mobile-menu-btn").addEventListener("click",()=>{document.getElementById("mobile-menu").classList.toggle("hidden");});
-
+document.addEventListener('DOMContentLoaded', () => {
+document.getElementById('year').textContent = new Date().getFullYear();
 renderProducts();
+updateCartUI();
+
+document.querySelectorAll('.faq-btn').forEach(btn=>{
+btn.addEventListener('click',()=>{const content=btn.nextElementSibling;content.classList.toggle('hidden');btn.querySelector('i').classList.toggle('fa-chevron-up');})
+});
+});
+
+function renderProducts(){const container=document.getElementById('product-container');container.innerHTML=products.map(p=>{const qty=productQuantities[p.id]||0;return `<article class="glass-card-premium rounded-2xl overflow-hidden product-card"><img src="${p.image}" alt="${p.name}" class="product-card-image" loading="lazy"><div class="product-card-content"><h3 class="product-card-title">${p.name}</h3><p class="product-card-desc">${p.desc}</p><div class="product-card-footer"><span class="text-xl font-bold text-urbor-green">৳${p.price}</span><div class="qty-control"><button onclick="changeQty(${p.id},-1)" class="qty-btn" ${qty===0?'disabled':''}><i class="fas fa-minus"></i></button><span class="qty-value">${qty}</span><button onclick="changeQty(${p.id},1)" class="qty-btn"><i class="fas fa-plus"></i></button></div></div></div></article>`;}).join('');}
+
+function changeQty(id,delta){productQuantities[id]=(productQuantities[id]||0)+delta;if(productQuantities[id]<0)productQuantities[id]=0;renderProducts();updateCartFromCards();}
+function updateCartFromCards(){cart={};products.forEach(p=>{const q=productQuantities[p.id]||0;if(q>0)cart[p.id]={...p,quantity:q};});updateCartUI();}
+function updateCartUI(){const items=Object.values(cart);const total=items.reduce((s,i)=>s+i.price*i.quantity,0);const count=items.reduce((s,i)=>s+i.quantity,0);document.getElementById('cart-count').textContent=count;document.getElementById('sidebar-total').textContent='৳'+total.toFixed(2);}
+function openCartSidebar(){document.getElementById('cart-sidebar').classList.remove('-translate-x-full');document.getElementById('cart-overlay').classList.remove('hidden');document.body.style.overflow='hidden';updateCartUI();}
+function closeCartSidebar(){document.getElementById('cart-sidebar').classList.add('-translate-x-full');document.getElementById('cart-overlay').classList.add('hidden');document.body.style.overflow='auto';}
 </script>
 
 </body>
