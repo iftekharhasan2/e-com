@@ -245,6 +245,38 @@ input:focus, textarea:focus { outline:none; box-shadow:0 0 0 3px rgba(45,106,79,
 <div class="text-center mt-8 text-sm text-white/60">© <span id="year"></span> AYHA. All rights reserved.</div>
 </footer>
 
+<!-- CHECKOUT MODAL -->
+<div id="checkout-modal" class="fixed inset-0 bg-black/40 z-[80] hidden flex justify-center items-center">
+  <div class="bg-white rounded-2xl max-w-lg w-full p-6 relative glass-card-premium">
+    <button onclick="closeCheckoutModal()" class="absolute top-4 right-4 text-gray-400 hover:text-red-500">
+      <i class="fas fa-times text-xl"></i>
+    </button>
+    <h2 class="text-2xl font-bold text-gray-900 mb-4">Checkout</h2>
+    <form id="checkout-form" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Name</label>
+        <input type="text" id="customer-name" required class="w-full border rounded-lg px-3 py-2 mt-1" placeholder="Your name">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Phone</label>
+        <input type="text" id="customer-phone" required class="w-full border rounded-lg px-3 py-2 mt-1" placeholder="01XXXXXXXXX">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Email</label>
+        <input type="email" id="customer-email" required class="w-full border rounded-lg px-3 py-2 mt-1" placeholder="you@example.com">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Address</label>
+        <textarea id="customer-address" required class="w-full border rounded-lg px-3 py-2 mt-1" placeholder="Your delivery address"></textarea>
+      </div>
+      <div class="text-right">
+        <button type="submit" class="btn-premium px-6 py-3 rounded-lg">Place Order</button>
+      </div>
+    </form>
+    <div id="checkout-message" class="mt-4 text-center text-sm font-medium"></div>
+  </div>
+</div>
+
 <script>
 const products = [
 { id:1, name:"Fashion Shirt", price:1200, image:"https://images.unsplash.com/photo-1610652492500-ded49ceeb378", desc:"Stylish cotton shirt, perfect for casual wear." },
@@ -270,6 +302,56 @@ function updateCartFromCards(){cart={};products.forEach(p=>{const q=productQuant
 function updateCartUI(){const items=Object.values(cart);const total=items.reduce((s,i)=>s+i.price*i.quantity,0);const count=items.reduce((s,i)=>s+i.quantity,0);document.getElementById('cart-count').textContent=count;document.getElementById('sidebar-total').textContent='৳'+total.toFixed(2);}
 function openCartSidebar(){document.getElementById('cart-sidebar').classList.remove('-translate-x-full');document.getElementById('cart-overlay').classList.remove('hidden');document.body.style.overflow='hidden';updateCartUI();}
 function closeCartSidebar(){document.getElementById('cart-sidebar').classList.add('-translate-x-full');document.getElementById('cart-overlay').classList.add('hidden');document.body.style.overflow='auto';}
+
+function proceedToCheckout(){
+  if(Object.keys(cart).length === 0){
+    alert('Your cart is empty!');
+    return;
+  }
+  openCheckoutModal();
+}
+
+function openCheckoutModal(){
+  document.getElementById('checkout-modal').classList.remove('hidden');
+  document.body.style.overflow='hidden';
+}
+
+function closeCheckoutModal(){
+  document.getElementById('checkout-modal').classList.add('hidden');
+  document.body.style.overflow='auto';
+}
+
+// Submit form to /api/sub
+document.getElementById('checkout-form').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const name = document.getElementById('customer-name').value.trim();
+  const phone = document.getElementById('customer-phone').value.trim();
+  const email = document.getElementById('customer-email').value.trim();
+  const address = document.getElementById('customer-address').value.trim();
+  const items = Object.values(cart).map(p=>({id:p.id,name:p.name,price:p.price,quantity:p.quantity}));
+  const total = items.reduce((sum,i)=>sum+i.price*i.quantity,0);
+  const transactionId = 'BK'+Date.now(); // simple unique transaction id
+
+  try{
+    const res = await fetch('/api/sub', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({name,phone,email,address,items,total,transactionId})
+    });
+    const data = await res.json();
+    if(data.success){
+      document.getElementById('checkout-message').innerHTML=`✅ Order placed successfully!<br>Transaction ID: <b>${data.transactionId}</b>`;
+      cart = {}; productQuantities={};
+      updateCartUI(); renderProducts();
+    } else {
+      document.getElementById('checkout-message').innerText = data.error || 'Failed to place order';
+    }
+  }catch(err){
+    document.getElementById('checkout-message').innerText = 'Server error. Please try again.';
+    console.error(err);
+  }
+});
+
 </script>
 
 </body>
