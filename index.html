@@ -4,13 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ahya Store</title>
-<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   body { margin:0; font-family: 'Inter', sans-serif; background:#f7f7f7; color:#333; }
   a { text-decoration:none; color:inherit; }
   h1,h2,h3,h4 { margin:0; }
-  button { cursor:pointer; }
+  button { cursor:pointer; transition:0.3s; }
 
   /* Header */
   header { background:#1e90ff; color:#fff; display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; position:sticky; top:0; z-index:1000; }
@@ -22,10 +21,10 @@
   .hero { background:#0d6efd url('https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf') center/cover no-repeat; color:#fff; text-align:center; padding:6rem 2rem; border-radius:0 0 50% 50%/20%; margin-bottom:2rem; }
   .hero h2 { font-size:2.5rem; margin-bottom:1rem; }
   .hero p { font-size:1.2rem; margin-bottom:2rem; }
-  .hero button { background:#ffd700; border:none; padding:1rem 2rem; font-weight:600; border-radius:6px; transition:0.3s; }
+  .hero button { background:#ffd700; border:none; padding:1rem 2rem; font-weight:600; border-radius:6px; }
   .hero button:hover { background:#e6c200; }
 
-  /* Product Grid */
+  /* Products Grid */
   #products { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:2rem; padding:2rem; max-width:1200px; margin:0 auto; }
   .product-card { background:#fff; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1); overflow:hidden; transition:0.3s; display:flex; flex-direction:column; justify-content:space-between; }
   .product-card:hover { transform:translateY(-5px); box-shadow:0 6px 15px rgba(0,0,0,0.15); }
@@ -33,24 +32,28 @@
   .product-card .info { padding:1rem; flex-grow:1; display:flex; flex-direction:column; justify-content:space-between; }
   .product-card h3 { font-size:1.1rem; margin-bottom:0.5rem; font-weight:600; }
   .product-card p { font-weight:600; margin-bottom:1rem; }
-  .product-card button { background:#1e90ff; color:#fff; border:none; padding:0.6rem 1rem; border-radius:6px; font-weight:600; transition:0.3s; }
+  .product-card button { background:#1e90ff; color:#fff; border:none; padding:0.6rem 1rem; border-radius:6px; font-weight:600; }
   .product-card button:hover { background:#0d6efd; }
 
   /* Cart Sidebar */
-  #cart-drawer { position:fixed; top:0; right:-400px; width:350px; height:100%; background:#fff; box-shadow:-4px 0 20px rgba(0,0,0,0.1); transition:0.3s; padding:2rem; z-index:1001; display:flex; flex-direction:column; }
+  #cart-drawer { position:fixed; top:0; right:-400px; width:360px; height:100%; background:#fff; box-shadow:-4px 0 20px rgba(0,0,0,0.1); transition:0.3s; padding:2rem; z-index:1001; display:flex; flex-direction:column; }
   #cart-drawer.open { right:0; }
-  #cart-drawer h2 { margin-bottom:1rem; }
-  .cart-item { display:flex; justify-content:space-between; margin-bottom:1rem; font-weight:500; }
-  .cart-item span { font-weight:400; }
-  #cart-total { margin-top:auto; font-weight:700; font-size:1.1rem; }
-  #close-cart { align-self:flex-end; background:none; border:none; font-size:1.5rem; cursor:pointer; }
+  #cart-drawer h2 { margin-bottom:1.5rem; font-weight:700; font-size:1.4rem; }
+  .cart-item { display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; padding:0.5rem 0; border-bottom:1px solid #eee; }
+  .cart-item span { font-weight:500; }
+  .quantity-controls { display:flex; align-items:center; gap:0.5rem; background:#f2f2f2; border-radius:6px; padding:2px 4px; }
+  .quantity-controls button { background:#1e90ff; color:#fff; border:none; border-radius:4px; width:28px; height:28px; font-weight:600; display:flex; justify-content:center; align-items:center; }
+  .quantity-controls button:hover { background:#0d6efd; }
+  .quantity-controls span { min-width:24px; text-align:center; font-weight:600; }
+  #cart-total { margin-top:auto; font-weight:700; font-size:1.2rem; margin-bottom:1rem; }
+  #close-cart { align-self:flex-end; background:none; border:none; font-size:1.5rem; cursor:pointer; margin-bottom:1rem; }
 
   /* Order Form Modal */
   #order-modal { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:none; justify-content:center; align-items:center; z-index:1002; }
   #order-modal.open { display:flex; }
   #order-form { background:#fff; padding:2rem; border-radius:12px; width:90%; max-width:500px; display:flex; flex-direction:column; }
   #order-form input, #order-form button { margin-bottom:1rem; padding:0.7rem; border-radius:6px; border:1px solid #ccc; font-size:1rem; }
-  #order-form button { background:#1e90ff; color:#fff; border:none; font-weight:600; transition:0.3s; }
+  #order-form button { background:#1e90ff; color:#fff; border:none; font-weight:600; }
   #order-form button:hover { background:#0d6efd; }
   #close-order { align-self:flex-end; background:none; border:none; font-size:1.5rem; cursor:pointer; margin-bottom:1rem; }
 
@@ -127,28 +130,36 @@
   </form>
 </div>
 
-<!-- Footer -->
 <footer>
   &copy; 2026 Ahya Store. All Rights Reserved.
 </footer>
 
 <script>
   // CART FUNCTIONS
-  function getCartItems() { return JSON.parse(localStorage.getItem('cart') || '[]'); }
-  function saveCartItems(items) { localStorage.setItem('cart', JSON.stringify(items)); }
-  function calculateTotal(items) { return items.reduce((sum,item)=>sum+item.price*item.quantity,0); }
+  function getCartItems(){ return JSON.parse(localStorage.getItem('cart') || '[]'); }
+  function saveCartItems(items){ localStorage.setItem('cart', JSON.stringify(items)); }
+  function calculateTotal(items){ return items.reduce((sum,i)=>sum+i.price*i.quantity,0); }
 
-  function displayCart() {
-    const items = getCartItems();
-    const container = document.getElementById('cart-items');
-    const totalEl = document.getElementById('cart-total');
-    const countEl = document.getElementById('cart-count');
-    container.innerHTML = '';
+  function displayCart(){
+    const items=getCartItems();
+    const container=document.getElementById('cart-items');
+    const totalEl=document.getElementById('cart-total');
+    const countEl=document.getElementById('cart-count');
+    container.innerHTML='';
     if(items.length===0){ container.innerHTML='<p>Your cart is empty</p>'; totalEl.textContent=''; countEl.textContent='0'; return; }
+    
     items.forEach(item=>{
-      const div = document.createElement('div');
+      const div=document.createElement('div');
       div.classList.add('cart-item');
-      div.innerHTML=`${item.name} x ${item.quantity} <span>৳${(item.price*item.quantity).toFixed(2)}</span>`;
+      div.innerHTML=`
+        <span>${item.name}</span>
+        <div class="quantity-controls">
+          <button onclick="updateQuantity('${item.id}', -1)">-</button>
+          <span>${item.quantity}</span>
+          <button onclick="updateQuantity('${item.id}', 1)">+</button>
+        </div>
+        <span>৳${(item.price*item.quantity).toFixed(2)}</span>
+      `;
       container.appendChild(div);
     });
     totalEl.textContent=`Total: ৳${calculateTotal(items).toFixed(2)}`;
@@ -167,18 +178,29 @@
     displayCart();
   }
 
-  // Cart drawer toggle
-  const cartDrawer = document.getElementById('cart-drawer');
-  document.getElementById('cart-toggle').onclick = () => cartDrawer.classList.add('open');
-  document.getElementById('close-cart').onclick = () => cartDrawer.classList.remove('open');
+  function updateQuantity(id, change){
+    let cart=getCartItems();
+    const item=cart.find(i=>i.id===id);
+    if(item){
+      item.quantity+=change;
+      if(item.quantity<=0) cart=cart.filter(i=>i.id!==id);
+      saveCartItems(cart);
+      displayCart();
+    }
+  }
 
-  // Order Modal
-  const orderModal = document.getElementById('order-modal');
+  // Cart drawer toggle
+  const cartDrawer=document.getElementById('cart-drawer');
+  document.getElementById('cart-toggle').onclick=()=>cartDrawer.classList.add('open');
+  document.getElementById('close-cart').onclick=()=>cartDrawer.classList.remove('open');
+
+  // Order modal
+  const orderModal=document.getElementById('order-modal');
   function openOrderModal(){ orderModal.classList.add('open'); }
-  document.getElementById('close-order').onclick = () => orderModal.classList.remove('open');
+  document.getElementById('close-order').onclick=()=>orderModal.classList.remove('open');
 
   // Submit order
-  document.getElementById('order-form').addEventListener('submit', async (e)=>{
+  document.getElementById('order-form').addEventListener('submit', async e=>{
     e.preventDefault();
     const name=document.getElementById('name').value.trim();
     const phone=document.getElementById('phone').value.trim();
@@ -189,7 +211,7 @@
     if(!name||!phone||!email||!address||!transactionId||items.length===0){ alert('Fill all fields & cart not empty'); return; }
     const total=calculateTotal(items);
     try{
-      const res=await fetch('https://your-vercel-url.vercel.app/api/sub',{
+      const res=await fetch('https://e-com-nine-rho.vercel.app/api/sub',{
         method:'POST', headers:{'Content-Type':'application/json'},
         body:JSON.stringify({name,phone,email,address,transactionId,total,items})
       });
