@@ -35,7 +35,7 @@ export default async function handler(req, res) {
 
     // Connect to MongoDB
     await client.connect();
-    const db = client.db('Ahya');
+    const db = client.db('Yamin');
     const collection = db.collection('orders');
 
     // Create order document
