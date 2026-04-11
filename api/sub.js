@@ -3,7 +3,7 @@ import { MongoClient } from 'mongodb';
 
 // 🔗 MongoDB Atlas connection string
 // ⚠️ Move to Vercel Environment Variables in production
-const MONGODB_URI = 'mongodb+srv://adnaninsky:980Orwo7M5xB8fnh@cluster0.bd9ywas.mongodb.net/ayah';
+const MONGODB_URI = 'mongodb+srv://Yeamin:kNRgLTsUiw6qWU0x@cluster0.nzauztk.mongodb.net/yamin';
 
 export default async function handler(req, res) {
   // CORS headers
