@@ -1,0 +1,57 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "image/**/*",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "api/sub.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/sub",
+      "dest": "/api/sub.js",
+      "methods": ["POST", "OPTIONS"],
+      "headers": {
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "Referrer-Policy": "strict-origin-when-cross-origin"
+      }
+    },
+    {
+      "src": "/api/(.*)",
+      "status": 404,
+      "headers": { "X-Content-Type-Options": "nosniff" }
+    },
+    {
+      "src": "/image/(.*)",
+      "dest": "/image/$1"
+    },
+    {
+      "src": "/(.+\\.html)",
+      "dest": "/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html",
+      "headers": {
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Cache-Control": "public, max-age=0, must-revalidate"
+      }
+    }
+  ],
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
